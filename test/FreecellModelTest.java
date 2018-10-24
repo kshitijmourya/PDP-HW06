@@ -1,9 +1,21 @@
+import org.junit.Before;
 import org.junit.Test;
+
+import freecell.model.AbstractCard;
+import freecell.model.CardDeck;
+import freecell.model.FreecellModel;
 
 import static org.junit.Assert.*;
 
 public class FreecellModelTest {
+private FreecellModel testModel;
+private CardDeck cards;
 
+@Before
+public void setUp() {
+  testModel = new FreecellModel();
+  cards = new AbstractCard();
+}
 
 /**
  * Test for getting valid deck.
@@ -14,6 +26,8 @@ public class FreecellModelTest {
  */
 @Test
 public void testgetDeck(){
+  System.out.println(testModel.getDeck());
+  //System.out.println(cards.createDeck());
 }
 
 /**

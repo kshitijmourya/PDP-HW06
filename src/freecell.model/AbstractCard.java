@@ -1,14 +1,21 @@
 package freecell.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class AbstractCard implements CardDeck{
+public class AbstractCard implements CardDeck{
   private String value;
+  private List<CardDeck> deck;
+
+  public AbstractCard(){
+    this.deck = new ArrayList<>();
+  }
 
   public AbstractCard(String value){
     this.value = value;
+    this.deck = new ArrayList<>();
   }
 
   @Override
@@ -17,21 +24,36 @@ public abstract class AbstractCard implements CardDeck{
   }
 
   @Override
+  public CardColor getColor() {
+    return null;
+  }
+
+  @Override
   public List createDeck() {
-    List<CardDeck> deck_of_cards = new LinkedList<>();
+    System.out.println("here2");
+
     List<String> card_values = Arrays.asList("A", "2", "3", "4", "5",
             "6", "7", "8", "9", "10", "J", "Q", "K");
 
-    while (!card_values.isEmpty()) {
-      deck_of_cards.add(new Hearts(card_values.get(0)));
-      deck_of_cards.add(new Diamonds(card_values.get(0)));
-      deck_of_cards.add(new Spades(card_values.get(0)));
-      deck_of_cards.add(new Clubs(card_values.get(0)));
+    //while (!card_values.isEmpty()) {
+    //  this.deck.add(new Hearts(card_values.get(0)));
+    //  this.deck.add(new Diamonds(card_values.get(0)));
+     // this.deck.add(new Spades(card_values.get(0)));
+     // this.deck.add(new Clubs(card_values.get(0)));
 
-      card_values.remove(0);
+//      card_values.remove(0);
+  //  }
+
+    for(int i=0; i<card_values.size()-1;i++){
+      this.deck.add(new Hearts(card_values.get(i)));
+      this.deck.add(new Diamonds(card_values.get(i)));
+      this.deck.add(new Spades(card_values.get(i)));
+      this.deck.add(new Clubs(card_values.get(i)));
+
     }
 
-    return deck_of_cards;
+
+    return this.deck;
   }
 }
 
