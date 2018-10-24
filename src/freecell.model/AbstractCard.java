@@ -26,7 +26,7 @@ public abstract class AbstractCard implements CardDeck{
       deck_of_cards.add(new Hearts(card_values.get(0)));
       deck_of_cards.add(new Diamonds(card_values.get(0)));
       deck_of_cards.add(new Spades(card_values.get(0)));
-      deck_of_cards.add(new Clover(card_values.get(0)));
+      deck_of_cards.add(new Clubs(card_values.get(0)));
 
       card_values.remove(0);
     }
@@ -77,10 +77,10 @@ class Spades extends AbstractCard {
   }
 }
 
-class Clover extends AbstractCard {
+class Clubs extends AbstractCard {
   private CardColor color;
 
-  public Clover(String value) {
+  public Clubs(String value) {
     super(value);
     this.color = CardColor.BLACK;
   }
