@@ -28,12 +28,13 @@ public class FreecellModel implements FreecellOperations {
    * the 4th pile will get cards 3, 7, 11, .... Depending on the number of cascade piles, they may
    * have a different number of cards
    *
-   * @param deck    the deck to be dealt
-   * @param shuffle if true, shuffle the deck else deal the deck as-is
-   * @throws IllegalArgumentException if the deck is invalid
+   * @param deck    the deck to be dealt in the game.
+   * @param shuffle if true, shuffle the deck else deal the deck as-is.
+   * @throws IllegalArgumentException if the deck is invalid.
    */
   @Override
-  public void startGame(List deck, boolean shuffle) throws IllegalArgumentException {
+  public void
+   startGame(List deck, boolean shuffle) throws IllegalArgumentException {
     Random random_index = new Random();
 
     if (shuffle) {
