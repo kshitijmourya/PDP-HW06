@@ -6,14 +6,19 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import javafx.util.Builder;
+
 /**
  *
  */
 public class FreecellModel implements FreecellOperations {
   private CardDeck deck_of_cards;
-  private List open;
-  private List<LinkedList> cascade;
-  private List<LinkedList> foundation;
+  private Piles openPiles;
+  private Piles cascadePiles;
+  private Piles foundationPiles;
+  private int opens;
+  private int cascades;
+
   private final HashMap<String, Integer> value_table = new HashMap<String, Integer>() {{
     put("A", 1); put("2", 2); put("3", 3); put("4", 4); put("5", 5); put("6", 6); put("7", 7);
     put("8", 8); put("9", 9); put("10", 10); put("J", 11); put("Q", 12); put("K", 13);
@@ -21,12 +26,71 @@ public class FreecellModel implements FreecellOperations {
 
   /**
    *
+   * @param opens
+   * @param cascades
    */
-  public FreecellModel() {
+  public FreecellModel(int opens, int cascades) {
     this.deck_of_cards = new Cards();
-    this.open = new ArrayList();
-    this.cascade = new ArrayList<LinkedList>();
-    this.foundation = new ArrayList<LinkedList>();
+    this.opens = opens;
+    this.cascades = cascades;
+
+    this.openPiles = new Piles(opens, PileType.OPEN);
+    this.cascadePiles = new Piles(cascades, PileType.CASCADE);
+    this.foundationPiles = new Piles(4, PileType.FOUNDATION);
+  }
+
+  /**
+   *
+   * @return
+   */
+  public static FreecellModelBuilder getBuilder() {
+    return new FreecellModelBuilder();
+  }
+
+  /**
+   *
+   */
+  public static class FreecellModelBuilder {
+    CardDeck deck_of_cards;
+    int opens;
+    int cascades;
+
+    /**
+     *
+     */
+    public FreecellModelBuilder() {
+      this.deck_of_cards = new Cards();
+      this.opens = 1;
+      this.cascades = 4;
+    }
+
+    /**
+     *
+     * @param opens
+     * @return
+     */
+    public FreecellModelBuilder opens(int opens) {
+      this.opens = opens;
+      return this;
+    }
+
+    /**
+     *
+     * @param cascades
+     * @return
+     */
+    public FreecellModelBuilder cascades(int cascades) {
+      this.cascades = cascades;
+      return this;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public FreecellModel build() {
+      return new FreecellModel(opens, cascades);
+    }
   }
 
   /**
@@ -40,7 +104,7 @@ public class FreecellModel implements FreecellOperations {
    * @return the deck of cards as a list
    */
   @Override
-  public List getDeck() {
+  public List<Cards> getDeck() {
     return deck_of_cards.createDeck();
   }
 
@@ -59,8 +123,34 @@ public class FreecellModel implements FreecellOperations {
   @Override
   public void
    startGame(List deck, boolean shuffle) throws IllegalArgumentException {
+    System.out.println(deck.size());
+    // if shuffle input is true the shuffle the deck.
     if (shuffle) {
+      // Collections.shuffle() method randomly shuffle a Collections object.
       Collections.shuffle(deck);
+    }
+
+    // got the number of cascade piles from cascade piles. Could have used this.cascades instead
+    // for a simpler approach. However, using it through getPiles.getsize() we ensure that the
+    // correct pile number was made when the object was instantiated.
+    int number_of_piles = this.cascadePiles.getPiles().size();
+
+    // in the while-loop below, as cards in the deck are being used, they are being removed
+    // so the condition here is to keep looping until there are no more cards in the deck.
+    while (!deck.isEmpty()) {
+      // for each pile in the cascade section, get the top card in the deck and add it to the pile.
+      for (int i = 0; i < number_of_piles; i++ ) {
+        // if the deck becomes empty as it is distributing cards then the process of distribution
+        // will stop and the loop will break.
+        if (!deck.isEmpty()){
+          // had to cast to get working, I don't know what K means in the interface but its
+          // keeping me from making the deck as List<Cards>. Ask in office hours.
+          this.cascadePiles.getPiles().get(i).add((Cards) deck.get(0));
+          deck.remove(0);
+        } else {
+          break;
+        }
+      }
     }
   }
 

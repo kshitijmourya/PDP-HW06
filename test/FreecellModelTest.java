@@ -1,6 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import freecell.model.CardDeck;
 import freecell.model.FreecellModel;
 
@@ -10,9 +12,12 @@ public class FreecellModelTest {
 private FreecellModel testModel;
 private CardDeck cards;
 
+  /**
+   *
+   */
 @Before
 public void setUp() {
-  testModel = new FreecellModel();
+  testModel = new FreecellModel(1, 5);
 }
 
 /**
@@ -24,8 +29,10 @@ public void setUp() {
  */
 @Test
 public void testgetDeck(){
-  System.out.println(testModel.getDeck());
-  //System.out.println(cards.createDeck());
+  List deck = testModel.getDeck();
+  assertEquals(52, testModel.getDeck().size());
+
+  testModel.startGame(deck, false);
 }
 
 /**
