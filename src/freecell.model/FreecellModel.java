@@ -1,35 +1,29 @@
 package freecell.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
+/**
+ *
+ */
 public class FreecellModel implements FreecellOperations {
   private CardDeck deck_of_cards;
-  private HashMap<String, Integer> value_table = new HashMap<String, Integer>();
-  List open;
-  List<LinkedList> cascade;
-  List<LinkedList> foundation;
+  private List open;
+  private List<LinkedList> cascade;
+  private List<LinkedList> foundation;
+  private final HashMap<String, Integer> value_table = new HashMap<String, Integer>() {{
+    put("A", 1); put("2", 2); put("3", 3); put("4", 4); put("5", 5); put("6", 6); put("7", 7);
+    put("8", 8); put("9", 9); put("10", 10); put("J", 11); put("Q", 12); put("K", 13);
+  }};
 
+  /**
+   *
+   */
   public FreecellModel() {
-    value_table.put("A", 1);
-    value_table.put("2", 2);
-    value_table.put("3", 3);
-    value_table.put("4", 4);
-    value_table.put("5", 5);
-    value_table.put("6", 6);
-    value_table.put("7", 7);
-    value_table.put("8", 8);
-    value_table.put("9", 9);
-    value_table.put("10", 10);
-    value_table.put("J", 11);
-    value_table.put("Q", 12);
-    value_table.put("K", 13);
-
     this.deck_of_cards = new Cards();
-
     this.open = new ArrayList();
     this.cascade = new ArrayList<LinkedList>();
     this.foundation = new ArrayList<LinkedList>();
@@ -65,22 +59,8 @@ public class FreecellModel implements FreecellOperations {
   @Override
   public void
    startGame(List deck, boolean shuffle) throws IllegalArgumentException {
-    Random random_index = new Random();
-
     if (shuffle) {
-      for (int i = 0; i < 100; i++) {
-        Object card = deck.remove(0);
-
-        int index = random_index.nextInt(50); //range 0-51, not 52 because removed initial card
-        deck.add(index, card);
-      }
-
-      for (int i = 0; i < 100; i++) {
-        Object card = deck.remove(51);
-
-        int index = random_index.nextInt(50); //range 0-51, not 52 because removed initial card
-        deck.add(index, card);
-      }
+      Collections.shuffle(deck);
     }
   }
 
