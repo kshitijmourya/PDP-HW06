@@ -8,5 +8,7 @@ public interface CardDeck {
 
   CardColor getColor();
 
+  String getSuite();
+
   List createDeck();
 }

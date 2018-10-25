@@ -47,7 +47,6 @@ public class FreecellModel implements FreecellOperations {
    */
   @Override
   public List getDeck() {
-    System.out.println("here1");
     return deck_of_cards.createDeck();
   }
 
