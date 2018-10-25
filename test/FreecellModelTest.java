@@ -14,7 +14,7 @@ private CardDeck cards;
 @Before
 public void setUp() {
   testModel = new FreecellModel();
-  cards = new AbstractCard();
+  cards = new Cards();
 }
 
 /**
