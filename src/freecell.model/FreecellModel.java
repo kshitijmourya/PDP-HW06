@@ -50,7 +50,7 @@ public class FreecellModel implements FreecellOperations {
   /**
    *
    */
-  public static class FreecellModelBuilder {
+  public static class FreecellModelBuilder implements FreecellOperationsBuilder{
     CardDeck deck_of_cards;
     int opens;
     int cascades;
