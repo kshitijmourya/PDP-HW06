@@ -1,7 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import freecell.model.AbstractCard;
 import freecell.model.CardDeck;
 import freecell.model.FreecellModel;
 
@@ -14,7 +13,6 @@ private CardDeck cards;
 @Before
 public void setUp() {
   testModel = new FreecellModel();
-  cards = new Cards();
 }
 
 /**

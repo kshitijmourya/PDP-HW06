@@ -28,7 +28,7 @@ public class FreecellModel implements FreecellOperations {
     value_table.put("Q", 12);
     value_table.put("K", 13);
 
-    this.deck_of_cards = new AbstractCard();
+    this.deck_of_cards = new Cards();
 
     this.open = new ArrayList();
     this.cascade = new ArrayList<LinkedList>();
