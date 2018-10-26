@@ -20,6 +20,7 @@ public class FreecellModel implements FreecellOperations {
   private Piles foundationPiles;
   private int opens;
   private int cascades;
+  private boolean hasGameBegun=false;
 
   private final HashMap<String, Integer> value_table = new HashMap<String, Integer>() {{
     put("A", 1); put("2", 2); put("3", 3); put("4", 4); put("5", 5); put("6", 6); put("7", 7);
@@ -153,6 +154,7 @@ public class FreecellModel implements FreecellOperations {
         }
       }
     }
+    hasGameBegun =true;
   }
 
   /**
@@ -273,6 +275,31 @@ public class FreecellModel implements FreecellOperations {
    */
   @Override
   public String getGameState() {
-    return null;
+    String gameState="";
+    if(hasGameBegun){
+      gameState="F1: \n" +
+              "F2: \n" +
+              "F3: \n" +
+              "F4:\n" +
+              "O1:\n" +
+              "O2:\n" +
+              "O3:\n" +
+              "O4: \n" +
+              "C1: \n" +
+              "C2: \n" +
+              "C3: \n" +
+              "C4: \n" +
+              "C5: \n" +
+              "C6: \n" +
+              "C7: \n" +
+              "C8: ";
+    }
+    else{
+      gameState="";
+
+    }
+    System.out.print(gameState);
+    return gameState;
   }
+
 }
