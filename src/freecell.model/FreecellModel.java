@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.smartcardio.Card;
+
 import javafx.util.Builder;
 
 /**
@@ -123,7 +125,6 @@ public class FreecellModel implements FreecellOperations {
   @Override
   public void
    startGame(List deck, boolean shuffle) throws IllegalArgumentException {
-    System.out.println(deck.size());
     // if shuffle input is true the shuffle the deck.
     if (shuffle) {
       // Collections.shuffle() method randomly shuffle a Collections object.
@@ -145,7 +146,7 @@ public class FreecellModel implements FreecellOperations {
         if (!deck.isEmpty()){
           // had to cast to get working, I don't know what K means in the interface but its
           // keeping me from making the deck as List<Cards>. Ask in office hours.
-          this.cascadePiles.getPiles().get(i).add((Cards) deck.get(0));
+          this.cascadePiles.getPiles().get(i).addFirst((Cards) deck.get(0));
           deck.remove(0);
         } else {
           break;
@@ -167,7 +168,51 @@ public class FreecellModel implements FreecellOperations {
    */
   @Override
   public void move(PileType source, int pileNumber, int cardIndex, PileType destination, int destPileNumber) throws IllegalArgumentException, IllegalStateException {
+    Cards card_shifting = new Cards();
 
+    // get card from foundation pile is impossible.
+    if (source.equals(PileType.FOUNDATION)) {
+      throw new IllegalArgumentException("Cards cannot be removed from the Foundation piles.");
+    }
+
+    // get card from open pile. first check pile type.
+    if (source.equals(PileType.OPEN)) {
+      // check if chosen pile is empty
+      if (!this.openPiles.getPiles().get(pileNumber).isEmpty()) {
+        // get value of first card in chosen pile
+        int shifting_card_value = value_table.get(this.openPiles.getPiles().get(pileNumber).peek().getValue());
+        // check if value of first card matches cardIndex given by user.
+        // If yes get card, else reject.
+        if(shifting_card_value == cardIndex) {
+          card_shifting = this.openPiles.getPiles().get(pileNumber).poll();
+        } else {
+          throw new IllegalArgumentException();
+        }
+      }
+    }
+
+    if (source.equals(PileType.CASCADE)) {
+      // check if chosen pile is empty
+      if (!this.cascadePiles.getPiles().get(pileNumber).isEmpty()) {
+        // get value of first card in chosen pile
+        int shifting_card_value = value_table.get(this.cascadePiles.getPiles().get(pileNumber).peek().getValue());
+        // check if value of first card matches cardIndex given by user.
+        // If yes get card, else reject.
+        if(shifting_card_value == cardIndex) {
+          card_shifting = this.cascadePiles.getPiles().get(pileNumber).poll();
+        } else {
+          throw new IllegalArgumentException();
+        }
+      }
+    }
+
+    if (destination.equals(PileType.FOUNDATION)) {
+    }
+    if (destination.equals(PileType.OPEN)) {
+
+    }
+    if (destination.equals(PileType.CASCADE)) {
+    }
   }
 
   /**

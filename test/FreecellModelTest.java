@@ -31,7 +31,6 @@ public void setUp() {
 public void testgetDeck(){
   List deck = testModel.getDeck();
   assertEquals(52, testModel.getDeck().size());
-
   testModel.startGame(deck, false);
 }
 
