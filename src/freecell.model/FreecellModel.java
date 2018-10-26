@@ -206,7 +206,30 @@ public class FreecellModel implements FreecellOperations {
       }
     }
 
+    int shifting_card_value = value_table.get(card_shifting.getValue());
     if (destination.equals(PileType.FOUNDATION)) {
+      // if pile is empty and the card being moved is an ACE, then add it to the pile.
+      if (this.foundationPiles.getPiles().get(pileNumber).isEmpty() && shifting_card_value == 1) {
+        this.foundationPiles.getPiles().get(pileNumber).addFirst(card_shifting);
+      }
+      // if pile is not empty, card value is 1 level higher than current card in pile,
+      // and card to be added has the suite matching that of the cards in the pile the add the card.
+      else if (!this.foundationPiles.getPiles().get(pileNumber).isEmpty()
+              && shifting_card_value -
+              value_table
+                      .get(this.foundationPiles.getPiles()
+                              .get(pileNumber)
+                              .peek()
+                              .getValue()) == 1
+              && card_shifting.getSuite().equals(
+                      this.foundationPiles
+                              .getPiles()
+                              .get(pileNumber)
+                              .peek()
+                              .getSuite())
+      ) {
+        this.foundationPiles.getPiles().get(pileNumber).addFirst(card_shifting);
+      }
     }
     if (destination.equals(PileType.OPEN)) {
 
