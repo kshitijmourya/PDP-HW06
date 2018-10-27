@@ -7,7 +7,7 @@ import java.util.List;
 /**
  *
  */
-public class Cards implements CardDeck {
+public class Cards implements CardDeck{
   private String suite;
   private CardColor color;
   private String value;

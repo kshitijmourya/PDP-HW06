@@ -1,14 +1,13 @@
 package freecell.model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.smartcardio.Card;
-
-import javafx.util.Builder;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -63,8 +62,8 @@ public class FreecellModel implements FreecellOperations {
      */
     public FreecellModelBuilder() {
       this.deck_of_cards = new Cards();
-      this.opens = 1;
-      this.cascades = 4;
+      this.opens = 4;
+      this.cascades = 8;
     }
 
     /**
@@ -154,7 +153,7 @@ public class FreecellModel implements FreecellOperations {
         }
       }
     }
-    hasGameBegun =true;
+    hasGameBegun = true;
   }
 
   /**
@@ -169,7 +168,9 @@ public class FreecellModel implements FreecellOperations {
    * @throws IllegalStateException    if a move is attempted before the game has starts
    */
   @Override
-  public void move(PileType source, int pileNumber, int cardIndex, PileType destination, int destPileNumber) throws IllegalArgumentException, IllegalStateException {
+  public void move(PileType source, int pileNumber,
+                   int cardIndex, PileType destination, int destPileNumber)
+          throws IllegalArgumentException, IllegalStateException {
     Cards card_shifting = new Cards();
 
     // get card from foundation pile is impossible.
@@ -197,14 +198,12 @@ public class FreecellModel implements FreecellOperations {
       // check if chosen pile is empty
       if (!this.cascadePiles.getPiles().get(pileNumber).isEmpty()) {
         // get value of first card in chosen pile
-        int shifting_card_value = value_table.get(this.cascadePiles.getPiles().get(pileNumber).peek().getValue());
-        System.out.println(shifting_card_value);
+        int shifting_card_value = value_table.get(this.cascadePiles.getPiles().get(pileNumber).peekLast().getValue());
         // check if value of first card matches cardIndex given by user.
         // If yes get card, else reject.
         if(shifting_card_value == cardIndex) {
-          card_shifting = this.cascadePiles.getPiles().get(pileNumber).poll();
+          card_shifting = this.cascadePiles.getPiles().get(pileNumber).pollLast();
         } else {
-
           throw new IllegalArgumentException();
         }
       }
@@ -215,22 +214,22 @@ public class FreecellModel implements FreecellOperations {
 
     if (destination.equals(PileType.FOUNDATION)) {
       // if pile is empty and the card being moved is an ACE, then add it to the pile.
-      if (this.foundationPiles.getPiles().get(pileNumber).isEmpty() && shifting_card_value == 1) {
-        this.foundationPiles.getPiles().get(pileNumber).addFirst(card_shifting);
+      if (this.foundationPiles.getPiles().get(destPileNumber).isEmpty() && shifting_card_value == 1) {
+        this.foundationPiles.getPiles().get(destPileNumber).addFirst(card_shifting);
       }
       // if pile is not empty, card value is 1 level higher than current card in pile,
       // and card to be added has the suite matching that of the cards in the pile the add the card.
-      else if (!this.foundationPiles.getPiles().get(pileNumber).isEmpty()
+      else if (!this.foundationPiles.getPiles().get(destPileNumber).isEmpty()
               && shifting_card_value -
               value_table
                       .get(this.foundationPiles.getPiles()
-                              .get(pileNumber)
+                              .get(destPileNumber)
                               .peek()
                               .getValue()) == 1
               && card_shifting.getSuite().equals(
                       this.foundationPiles
                               .getPiles()
-                              .get(pileNumber)
+                              .get(destPileNumber)
                               .peek()
                               .getSuite())
       ) {
@@ -239,13 +238,13 @@ public class FreecellModel implements FreecellOperations {
     }
 
     if (destination.equals(PileType.OPEN)) {
-      if(!this.openPiles.getPiles().get(pileNumber).isEmpty()){
+      if(!this.openPiles.getPiles().get(destPileNumber).isEmpty()){
         throw  new IllegalArgumentException();
       }
       else {
         this.openPiles
                 .getPiles()
-                .get(pileNumber)
+                .get(destPileNumber)
                 .addFirst(card_shifting);
       }
     }
@@ -258,16 +257,28 @@ public class FreecellModel implements FreecellOperations {
       //Otherwise it is an invalid move.
 
       //1) Check if pile is empty. Move the card.
-      if(this.cascadePiles.getPiles().get(pileNumber).isEmpty())
+      if(this.cascadePiles.getPiles().get(destPileNumber).isEmpty())
       {
-        this.cascadePiles.getPiles().get(pileNumber).addFirst(card_shifting);
+        this.cascadePiles.getPiles().get(destPileNumber).addLast(card_shifting);
       }
 
       //If pile is not empty. Compare the card at destination pile with shifting card.
       //They should have different colours.
       //Value should be one less than the card present.
-      else {
-
+      else if (!this.cascadePiles.getPiles().get(destPileNumber).isEmpty()
+              && shifting_card_value -
+              value_table
+                      .get(this.cascadePiles.getPiles()
+                              .get(destPileNumber)
+                              .peekLast()
+                              .getValue()) == -1
+              && !card_shifting.getColor().equals(
+              this.cascadePiles
+                      .getPiles()
+                      .get(destPileNumber)
+                      .peekLast()
+                      .getColor())) {
+        this.cascadePiles.getPiles().get(destPileNumber).addLast(card_shifting);
       }
     }
 
@@ -308,31 +319,54 @@ public class FreecellModel implements FreecellOperations {
    */
   @Override
   public String getGameState() {
-    String gameState="";
+    String gameState = "";
+
     if(hasGameBegun){
-      gameState="F1: \n" +
-              "F2: \n" +
-              "F3: \n" +
-              "F4:\n" +
-              "O1:\n" +
-              "O2:\n" +
-              "O3:\n" +
-              "O4: \n" +
-              "C1: \n" +
-              "C2: \n" +
-              "C3: \n" +
-              "C4: \n" +
-              "C5: \n" +
-              "C6: \n" +
-              "C7: \n" +
-              "C8: ";
+      for (int k = 0; k < this.foundationPiles.getPiles().size(); k++) {
+        gameState += helperGameState("F", k, this.foundationPiles.getPiles());
+      }
+      for (int k = 0; k < this.openPiles.getPiles().size(); k++) {
+        gameState += helperGameState("O", k, this.openPiles.getPiles());
+      }
+      for (int k = 0; k < this.cascadePiles.getPiles().size(); k++) {
+        gameState += helperGameState("C", k, this.cascadePiles.getPiles());
+      }
     }
     else{
       gameState="";
 
     }
-    System.out.print(gameState);
     return gameState;
   }
+  private String helperGameState(String initialString, int pileNumber, List<LinkedList<Cards>> pilesInput){
+    // starting string is O
+    // iteration number gets joined with O
+    // the : gets added with a space after
+    // then the cards that are there
+    // then new space
+    StringBuilder build_state = new StringBuilder();
+    String pile_state = initialString + String.valueOf(pileNumber + 1) + ": ";
+    Cards[] pile = new Cards[pilesInput.get(pileNumber).size()];
+
+    pilesInput.get(pileNumber).toArray(pile);
+    List<String> state_list = Arrays.stream(pile)
+            .map(a -> a.getValue() + a.getSuite())
+            .collect(Collectors.toList());
+
+    if (state_list.isEmpty()) {
+      return pile_state + "\n";
+    }
+    for (String state : state_list) {
+      if (state.equals(state_list.get(state_list.size()-1))) {
+        build_state.append(state + "\n");
+      } else {
+        build_state.append(state + ", ");
+      }
+    }
+
+    pile_state += build_state.toString();
+    return pile_state;
+  }
+
 
 }

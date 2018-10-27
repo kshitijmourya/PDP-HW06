@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Piles implements CardPiles{
+public class Piles implements CardPiles {
   private PileType type;
   private int pileCount;
   private List<LinkedList<Cards>> piles;

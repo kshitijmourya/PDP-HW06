@@ -24,7 +24,9 @@ public class Hw02TypeChecks {
   private static <T> void helper(freecell.model.FreecellOperations<T> model) {
     List<T> deck = model.getDeck();
     model.startGame(deck, false);
-    model.move(PileType.CASCADE, 0, 6, PileType.CASCADE, 2);
+    System.out.println(model.getGameState());
+    model.move(PileType.CASCADE, 0, 1, PileType.CASCADE, 7);
+    System.out.println(model.getGameState());
 
   }
 }
