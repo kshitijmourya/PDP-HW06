@@ -198,17 +198,21 @@ public class FreecellModel implements FreecellOperations {
       if (!this.cascadePiles.getPiles().get(pileNumber).isEmpty()) {
         // get value of first card in chosen pile
         int shifting_card_value = value_table.get(this.cascadePiles.getPiles().get(pileNumber).peek().getValue());
+        System.out.println(shifting_card_value);
         // check if value of first card matches cardIndex given by user.
         // If yes get card, else reject.
         if(shifting_card_value == cardIndex) {
           card_shifting = this.cascadePiles.getPiles().get(pileNumber).poll();
         } else {
+
           throw new IllegalArgumentException();
         }
       }
     }
 
     int shifting_card_value = value_table.get(card_shifting.getValue());
+
+
     if (destination.equals(PileType.FOUNDATION)) {
       // if pile is empty and the card being moved is an ACE, then add it to the pile.
       if (this.foundationPiles.getPiles().get(pileNumber).isEmpty() && shifting_card_value == 1) {
@@ -233,11 +237,40 @@ public class FreecellModel implements FreecellOperations {
         this.foundationPiles.getPiles().get(pileNumber).addFirst(card_shifting);
       }
     }
-    if (destination.equals(PileType.OPEN)) {
 
+    if (destination.equals(PileType.OPEN)) {
+      if(!this.openPiles.getPiles().get(pileNumber).isEmpty()){
+        throw  new IllegalArgumentException();
+      }
+      else {
+        this.openPiles
+                .getPiles()
+                .get(pileNumber)
+                .addFirst(card_shifting);
+      }
     }
+
     if (destination.equals(PileType.CASCADE)) {
+      //Check for card at destination.
+      //compare both cards.
+      //Allow the move only when conditions are fulfilled.
+      //Colour should be opposite and value should be one less than the card present there.
+      //Otherwise it is an invalid move.
+
+      //1) Check if pile is empty. Move the card.
+      if(this.cascadePiles.getPiles().get(pileNumber).isEmpty())
+      {
+        this.cascadePiles.getPiles().get(pileNumber).addFirst(card_shifting);
+      }
+
+      //If pile is not empty. Compare the card at destination pile with shifting card.
+      //They should have different colours.
+      //Value should be one less than the card present.
+      else {
+
+      }
     }
+
   }
 
   /**
