@@ -167,6 +167,24 @@ public class FreecellModel implements FreecellOperations {
     hasGameBegun = true;
   }
 
+  public Cards getShiftingCard(List<LinkedList<Cards>> pilesInput, int pileNumber, int cardValue){
+    Cards shifting_card = new Cards();
+    // check if chosen pile is empty
+    if (!pilesInput.get(pileNumber).isEmpty()) {
+      // get value of first card in chosen pile
+      int shifting_card_value = value_table.get(pilesInput.get(pileNumber).peekLast().getValue());
+      System.out.println(shifting_card_value);
+      // check if value of first card matches cardIndex given by user.
+      // If yes get card, else reject.
+      if (shifting_card_value == cardValue) {
+        shifting_card = pilesInput.get(pileNumber).peekLast();
+      } else {
+        throw new IllegalArgumentException();
+      }
+    }
+    return shifting_card;
+  }
+
   /**
    * Move a card from the given source pile to the given destination pile, if the move is valid.
    *
