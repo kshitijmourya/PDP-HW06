@@ -39,4 +39,6 @@ public class Piles implements CardPiles {
   public List<LinkedList<Cards>> getPiles(){
     return this.piles;
   }
+
+
 }
