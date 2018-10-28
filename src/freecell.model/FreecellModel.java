@@ -185,6 +185,21 @@ public class FreecellModel implements FreecellOperations {
     return shifting_card;
   }
 
+  public void removeCard(PileType source, int pileNumber) {
+    if (source.equals(PileType.FOUNDATION)) {
+      this.foundationPiles.getPiles().get(pileNumber).pollLast();
+    }
+
+    if (source.equals(PileType.OPEN)) {
+      this.openPiles.getPiles().get(pileNumber).pollLast();
+    }
+
+    if (source.equals(PileType.CASCADE)) {
+      System.out.println("here");
+      this.cascadePiles.getPiles().get(pileNumber).pollLast();
+    }
+  }
+
   /**
    * Move a card from the given source pile to the given destination pile, if the move is valid.
    *
@@ -201,41 +216,22 @@ public class FreecellModel implements FreecellOperations {
                    int cardIndex, PileType destination, int destPileNumber)
           throws IllegalArgumentException, IllegalStateException {
     Cards card_shifting = new Cards();
+    List<LinkedList<Cards>> pile_source = new ArrayList<LinkedList<Cards>>();
 
     // get card from foundation pile is impossible.
     if (source.equals(PileType.FOUNDATION)) {
-      throw new IllegalArgumentException("Cards cannot be removed from the Foundation piles.");
+      pile_source.addAll(this.foundationPiles.getPiles());
+      card_shifting = getShiftingCard(pile_source, pileNumber, cardIndex);
     }
 
-    // get card from open pile. first check pile type.
     if (source.equals(PileType.OPEN)) {
-      // check if chosen pile is empty
-      if (!this.openPiles.getPiles().get(pileNumber).isEmpty()) {
-        // get value of first card in chosen pile
-        int shifting_card_value = value_table.get(this.openPiles.getPiles().get(pileNumber).peek().getValue());
-        // check if value of first card matches cardIndex given by user.
-        // If yes get card, else reject.
-        if (shifting_card_value == cardIndex) {
-          card_shifting = this.openPiles.getPiles().get(pileNumber).poll();
-        } else {
-          throw new IllegalArgumentException();
-        }
-      }
+      pile_source.addAll(this.openPiles.getPiles());
+      card_shifting = getShiftingCard(pile_source, pileNumber, cardIndex);
     }
 
     if (source.equals(PileType.CASCADE)) {
-      // check if chosen pile is empty
-      if (!this.cascadePiles.getPiles().get(pileNumber).isEmpty()) {
-        // get value of first card in chosen pile
-        int shifting_card_value = value_table.get(this.cascadePiles.getPiles().get(pileNumber).peekLast().getValue());
-        // check if value of first card matches cardIndex given by user.
-        // If yes get card, else reject.
-        if (shifting_card_value == cardIndex) {
-          card_shifting = this.cascadePiles.getPiles().get(pileNumber).pollLast();
-        } else {
-          throw new IllegalArgumentException();
-        }
-      }
+      pile_source.addAll(this.cascadePiles.getPiles());
+      card_shifting = getShiftingCard(pile_source, pileNumber, cardIndex);
     }
 
     int shifting_card_value = value_table.get(card_shifting.getValue());
@@ -247,6 +243,7 @@ public class FreecellModel implements FreecellOperations {
       // if pile is empty and the card being moved is an ACE, then add it to the pile.
       if (this.foundationPiles.getPiles().get(destPileNumber).isEmpty() && shifting_card_value == 1) {
         this.foundationPiles.getPiles().get(destPileNumber).addFirst(card_shifting);
+        removeCard(source, pileNumber);
       }
       // if pile is not empty, card value is 1 level higher than current card in pile,
       // and card to be added has the suite matching that of the cards in the pile the add the card.
@@ -263,8 +260,7 @@ public class FreecellModel implements FreecellOperations {
                       .get(destPileNumber)
                       .peekLast()
                       .getColor())) {
-
-
+        removeCard(source, pileNumber);
         this.foundationPiles.getPiles().get(destPileNumber).addLast(card_shifting);
       }
     }
