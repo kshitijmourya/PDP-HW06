@@ -17,7 +17,7 @@ private CardDeck cards;
    */
 @Before
 public void setUp() {
-  testModel = new FreecellModel(1, 4);
+  testModel = new FreecellModel(4, 8);
 }
 
 /**
@@ -28,10 +28,11 @@ public void setUp() {
  * 3) No duplicate cards.
  */
 @Test
-public void testgetDeck(){
+public void testGetDeck(){
   List deck = testModel.getDeck();
   assertEquals(52, testModel.getDeck().size());
-  testModel.startGame(deck, false);
+
+  //testModel.startGame(deck, false);
 }
 
 /**
@@ -41,9 +42,35 @@ public void testgetDeck(){
  * test 2 - Without shuffling.
  */
 @Test
-public void testStartGame(){
-
+public void testStartGame1(){
+  List deck = testModel.getDeck();
+  assertEquals(52, testModel.getDeck().size());
+  testModel.startGame(deck, false);
+  String st= testModel.getGameState();
+  assertEquals(st,"F1: \n" +
+          "F2: \n" +
+          "F3: \n" +
+          "F4: \n" +
+          "O1: \n" +
+          "O2: \n" +
+          "O3: \n" +
+          "O4: \n" +
+          "C1: K♥, J♥, 9♥, 7♥, 5♥, 3♥, A♥\n" +
+          "C2: K♦, J♦, 9♦, 7♦, 5♦, 3♦, A♦\n" +
+          "C3: K♠, J♠, 9♠, 7♠, 5♠, 3♠, A♠\n" +
+          "C4: K♣, J♣, 9♣, 7♣, 5♣, 3♣, A♣\n" +
+          "C5: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n" +
+          "C6: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n" +
+          "C7: Q♠, 10♠, 8♠, 6♠, 4♠, 2♠\n" +
+          "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣");
 }
+
+  @Test
+  public void testStartGame2(){
+    List deck = testModel.getDeck();
+    assertEquals(52, testModel.getDeck().size());
+    testModel.startGame(deck, true);
+  }
 
 /**
  * Tests for all decks are valid after startGame().

@@ -94,18 +94,29 @@ public class testMain {
     model.move(PileType.CASCADE, 7, 2, PileType.FOUNDATION, 3);
 */
 
+  /*  model.move(PileType.CASCADE, 0, 1, PileType.FOUNDATION, 0);
+    model.move(PileType.CASCADE, 1, 1, PileType.FOUNDATION, 1);
+    model.move(PileType.CASCADE, 2, 1, PileType.FOUNDATION, 2);
+    model.move(PileType.CASCADE, 3, 1, PileType.FOUNDATION, 3);
 
-
-/*
-    for (int i = 0; i < 8; i++) {
-      for (int j = 0; j < 4; j++) {
-        for (int k = 3; k < 14;k=k+3) {
-          model.move(PileType.CASCADE, i,k, PileType.FOUNDATION, j);
-          model.move(PileType.CASCADE, i, k-1, PileType.FOUNDATION, j);
-        }
+  for(int j=2;j<14;j++){
+    for(int i=0;i<9;i++)
+    {
+      int k=0;
+      if(i==1 || i==5){
+        k=1;
       }
+      if(i==2 || i==6){
+         k=2;
+      }
+      if(i==3 || i==7){
+        k=3;
+      }
+      System.out.println(i+" "+j+" "+k);
+      model.move(PileType.CASCADE,i,j+1,PileType.FOUNDATION,k);
     }
-*/
+  }
+  */
     System.out.print(model.getGameState());
 
   }
