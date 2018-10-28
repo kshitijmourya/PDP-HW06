@@ -237,6 +237,19 @@ public class FreecellModel implements FreecellOperations {
     int shifting_card_value = value_table.get(card_shifting.getValue());
    // System.out.println(shifting_card_value);
 
+    // if detination is open pile, make sure it is empty.
+    if (destination.equals(PileType.OPEN)) {
+      if (!this.openPiles.getPiles().get(destPileNumber).isEmpty()) {
+        throw new IllegalArgumentException();
+      } else {
+        this.openPiles
+                .getPiles()
+                .get(destPileNumber)
+                .addFirst(card_shifting);
+        removeCard(source, pileNumber);
+      }
+    }
+
     if (destination.equals(PileType.FOUNDATION)) {
 
      // System.out.println("here1");
@@ -265,17 +278,6 @@ public class FreecellModel implements FreecellOperations {
       }
     }
 
-    if (destination.equals(PileType.OPEN)) {
-      if (!this.openPiles.getPiles().get(destPileNumber).isEmpty()) {
-        throw new IllegalArgumentException();
-      } else {
-        this.openPiles
-                .getPiles()
-                .get(destPileNumber)
-                .addFirst(card_shifting);
-      }
-    }
-
     if (destination.equals(PileType.CASCADE)) {
       //Check for card at destination.
       //compare both cards.
@@ -286,6 +288,7 @@ public class FreecellModel implements FreecellOperations {
       //1) Check if pile is empty. Move the card.
       if (this.cascadePiles.getPiles().get(destPileNumber).isEmpty()) {
         this.cascadePiles.getPiles().get(destPileNumber).addLast(card_shifting);
+        removeCard(source, pileNumber);
       }
 
       //If pile is not empty. Compare the card at destination pile with shifting card.
@@ -305,6 +308,7 @@ public class FreecellModel implements FreecellOperations {
                       .peekLast()
                       .getColor())) {
         this.cascadePiles.getPiles().get(destPileNumber).addLast(card_shifting);
+        removeCard(source, pileNumber);
       }
     }
 
