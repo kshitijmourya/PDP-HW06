@@ -41,6 +41,7 @@ public void testGetDeck(){
  * test1- With shuffling
  * test 2 - Without shuffling.
  */
+//Remove whitespace from the last line in the expected output.
 @Test
 public void testStartGame1(){
   List deck = testModel.getDeck();
@@ -70,6 +71,22 @@ public void testStartGame1(){
     List deck = testModel.getDeck();
     assertEquals(52, testModel.getDeck().size());
     testModel.startGame(deck, true);
+    assertNotEquals(testModel.getGameState(),"F1: \n" +
+            "F2: \n" +
+            "F3: \n" +
+            "F4: \n" +
+            "O1: \n" +
+            "O2: \n" +
+            "O3: \n" +
+            "O4: \n" +
+            "C1: K♥, J♥, 9♥, 7♥, 5♥, 3♥, A♥\n" +
+            "C2: K♦, J♦, 9♦, 7♦, 5♦, 3♦, A♦\n" +
+            "C3: K♠, J♠, 9♠, 7♠, 5♠, 3♠, A♠\n" +
+            "C4: K♣, J♣, 9♣, 7♣, 5♣, 3♣, A♣\n" +
+            "C5: Q♥, 10♥, 8♥, 6♥, 4♥, 2♥\n" +
+            "C6: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n" +
+            "C7: Q♠, 10♠, 8♠, 6♠, 4♠, 2♠\n" +
+            "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣");
   }
 
 /**
@@ -77,6 +94,7 @@ public void testStartGame1(){
  */
 @Test
 public void testAllValidDecks(){
+
 
 }
 

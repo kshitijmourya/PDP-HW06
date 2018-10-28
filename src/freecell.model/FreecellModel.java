@@ -361,11 +361,13 @@ public class FreecellModel implements FreecellOperations {
       for (int k = 0; k < this.cascadePiles.getPiles().size(); k++) {
         gameState += helperGameState("C", k, this.cascadePiles.getPiles());
       }
+
     } else {
       gameState = "";
 
     }
-    return gameState;
+
+    return gameState.trim();
   }
 
   private String helperGameState(String initialString, int pileNumber, List<LinkedList<Cards>> pilesInput) {
