@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- *
+ * This class implements FreecellOperations Interface.
  */
 public class FreecellModel implements FreecellOperations {
   private CardDeck deck_of_cards;
@@ -19,11 +19,22 @@ public class FreecellModel implements FreecellOperations {
   private Piles foundationPiles;
   private int opens;
   private int cascades;
-  private boolean hasGameBegun=false;
+  private boolean hasGameBegun = false;
 
   private final HashMap<String, Integer> value_table = new HashMap<String, Integer>() {{
-    put("A", 1); put("2", 2); put("3", 3); put("4", 4); put("5", 5); put("6", 6); put("7", 7);
-    put("8", 8); put("9", 9); put("10", 10); put("J", 11); put("Q", 12); put("K", 13);
+    put("A", 1);
+    put("2", 2);
+    put("3", 3);
+    put("4", 4);
+    put("5", 5);
+    put("6", 6);
+    put("7", 7);
+    put("8", 8);
+    put("9", 9);
+    put("10", 10);
+    put("J", 11);
+    put("Q", 12);
+    put("K", 13);
   }};
 
   /**
@@ -52,7 +63,7 @@ public class FreecellModel implements FreecellOperations {
   /**
    *
    */
-  public static class FreecellModelBuilder implements FreecellOperationsBuilder{
+  public static class FreecellModelBuilder implements FreecellOperationsBuilder {
     CardDeck deck_of_cards;
     int opens;
     int cascades;
@@ -124,7 +135,7 @@ public class FreecellModel implements FreecellOperations {
    */
   @Override
   public void
-   startGame(List deck, boolean shuffle) throws IllegalArgumentException {
+  startGame(List deck, boolean shuffle) throws IllegalArgumentException {
     // if shuffle input is true the shuffle the deck.
     if (shuffle) {
       // Collections.shuffle() method randomly shuffle a Collections object.
@@ -140,10 +151,10 @@ public class FreecellModel implements FreecellOperations {
     // so the condition here is to keep looping until there are no more cards in the deck.
     while (!deck.isEmpty()) {
       // for each pile in the cascade section, get the top card in the deck and add it to the pile.
-      for (int i = 0; i < number_of_piles; i++ ) {
+      for (int i = 0; i < number_of_piles; i++) {
         // if the deck becomes empty as it is distributing cards then the process of distribution
         // will stop and the loop will break.
-        if (!deck.isEmpty()){
+        if (!deck.isEmpty()) {
           // had to cast to get working, I don't know what K means in the interface but its
           // keeping me from making the deck as List<Cards>. Ask in office hours.
           this.cascadePiles.getPiles().get(i).addFirst((Cards) deck.get(0));
@@ -186,7 +197,7 @@ public class FreecellModel implements FreecellOperations {
         int shifting_card_value = value_table.get(this.openPiles.getPiles().get(pileNumber).peek().getValue());
         // check if value of first card matches cardIndex given by user.
         // If yes get card, else reject.
-        if(shifting_card_value == cardIndex) {
+        if (shifting_card_value == cardIndex) {
           card_shifting = this.openPiles.getPiles().get(pileNumber).poll();
         } else {
           throw new IllegalArgumentException();
@@ -201,7 +212,7 @@ public class FreecellModel implements FreecellOperations {
         int shifting_card_value = value_table.get(this.cascadePiles.getPiles().get(pileNumber).peekLast().getValue());
         // check if value of first card matches cardIndex given by user.
         // If yes get card, else reject.
-        if(shifting_card_value == cardIndex) {
+        if (shifting_card_value == cardIndex) {
           card_shifting = this.cascadePiles.getPiles().get(pileNumber).pollLast();
         } else {
           throw new IllegalArgumentException();
@@ -227,21 +238,20 @@ public class FreecellModel implements FreecellOperations {
                               .peek()
                               .getValue()) == 1
               && card_shifting.getSuite().equals(
-                      this.foundationPiles
-                              .getPiles()
-                              .get(destPileNumber)
-                              .peek()
-                              .getSuite())
+              this.foundationPiles
+                      .getPiles()
+                      .get(destPileNumber)
+                      .peek()
+                      .getSuite())
       ) {
         this.foundationPiles.getPiles().get(pileNumber).addFirst(card_shifting);
       }
     }
 
     if (destination.equals(PileType.OPEN)) {
-      if(!this.openPiles.getPiles().get(destPileNumber).isEmpty()){
-        throw  new IllegalArgumentException();
-      }
-      else {
+      if (!this.openPiles.getPiles().get(destPileNumber).isEmpty()) {
+        throw new IllegalArgumentException();
+      } else {
         this.openPiles
                 .getPiles()
                 .get(destPileNumber)
@@ -257,8 +267,7 @@ public class FreecellModel implements FreecellOperations {
       //Otherwise it is an invalid move.
 
       //1) Check if pile is empty. Move the card.
-      if(this.cascadePiles.getPiles().get(destPileNumber).isEmpty())
-      {
+      if (this.cascadePiles.getPiles().get(destPileNumber).isEmpty()) {
         this.cascadePiles.getPiles().get(destPileNumber).addLast(card_shifting);
       }
 
@@ -321,7 +330,7 @@ public class FreecellModel implements FreecellOperations {
   public String getGameState() {
     String gameState = "";
 
-    if(hasGameBegun){
+    if (hasGameBegun) {
       for (int k = 0; k < this.foundationPiles.getPiles().size(); k++) {
         gameState += helperGameState("F", k, this.foundationPiles.getPiles());
       }
@@ -331,14 +340,14 @@ public class FreecellModel implements FreecellOperations {
       for (int k = 0; k < this.cascadePiles.getPiles().size(); k++) {
         gameState += helperGameState("C", k, this.cascadePiles.getPiles());
       }
-    }
-    else{
-      gameState="";
+    } else {
+      gameState = "";
 
     }
     return gameState;
   }
-  private String helperGameState(String initialString, int pileNumber, List<LinkedList<Cards>> pilesInput){
+
+  private String helperGameState(String initialString, int pileNumber, List<LinkedList<Cards>> pilesInput) {
     // starting string is O
     // iteration number gets joined with O
     // the : gets added with a space after
@@ -357,7 +366,7 @@ public class FreecellModel implements FreecellOperations {
       return pile_state + "\n";
     }
     for (String state : state_list) {
-      if (state.equals(state_list.get(state_list.size()-1))) {
+      if (state.equals(state_list.get(state_list.size() - 1))) {
         build_state.append(state + "\n");
       } else {
         build_state.append(state + ", ");
