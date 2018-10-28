@@ -64,6 +64,7 @@ public void testStartGame1(){
           "C6: Q♦, 10♦, 8♦, 6♦, 4♦, 2♦\n" +
           "C7: Q♠, 10♠, 8♠, 6♠, 4♠, 2♠\n" +
           "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣");
+
 }
 
   @Test
@@ -99,12 +100,16 @@ public void testAllValidDecks(){
 }
 
 
+
+
 /**
  * Combination of move and getGamestate().
  */
 @Test
 public void testGameState1(){
   // Return empty string before game has begun.
+
+  assertEquals(testModel.getGameState(),"");
 }
 
   @Test
@@ -136,4 +141,9 @@ public void testGameState1(){
 public void testGameOver()
 {}
 
+
+@Test
+public void startInvalidGame(){
+
+}
 }

@@ -135,6 +135,29 @@ public class FreecellModel implements FreecellOperations {
   @Override
   public void
   startGame(List deck, boolean shuffle) throws IllegalArgumentException {
+
+    if(deck.size() == 52){
+      CardDeck new_deck = new Cards();
+      Cards[] control_deck = new Cards[52];
+      List<Cards> test_deck = new_deck.createDeck();
+      test_deck.toArray(control_deck);
+      List<String> control_list = Arrays.stream(control_deck)
+              .map(a -> a.getValue() + a.getSuite())
+              .collect(Collectors.toList());
+
+      Cards[] exp_deck = new Cards[52];
+      deck.toArray(exp_deck);
+
+      List<String> exp_list = Arrays.stream(exp_deck)
+              .map(a -> a.getValue() + a.getSuite())
+              .collect(Collectors.toList());
+
+      if(!control_list.containsAll(exp_list)) {
+        throw new IllegalArgumentException("Invalid Deck");
+      }
+    } else {
+      throw new IllegalArgumentException("Invalid Deck");
+    }
     // if shuffle input is true the shuffle the deck.
     if (shuffle) {
       // Collections.shuffle() method randomly shuffle a Collections object.
@@ -162,8 +185,9 @@ public class FreecellModel implements FreecellOperations {
           break;
         }
       }
+      hasGameBegun = true;
     }
-    hasGameBegun = true;
+
   }
 
   public Cards getShiftingCard(List<LinkedList<Cards>> pilesInput, int pileNumber, int cardValue){

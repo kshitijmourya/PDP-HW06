@@ -74,4 +74,9 @@ public class Cards implements CardDeck {
     }
     return deck;
   }
+
+  @Override
+  public String toString() {
+    return this.value + this.suite;
+  }
 }

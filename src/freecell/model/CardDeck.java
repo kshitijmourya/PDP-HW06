@@ -35,4 +35,6 @@ public interface CardDeck {
    * @return a new deck in list form.
    */
   List<Cards> createDeck();
+
+  String toString();
 }
