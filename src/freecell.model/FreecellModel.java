@@ -221,9 +221,11 @@ public class FreecellModel implements FreecellOperations {
     }
 
     int shifting_card_value = value_table.get(card_shifting.getValue());
-
+   // System.out.println(shifting_card_value);
 
     if (destination.equals(PileType.FOUNDATION)) {
+
+     // System.out.println("here1");
       // if pile is empty and the card being moved is an ACE, then add it to the pile.
       if (this.foundationPiles.getPiles().get(destPileNumber).isEmpty() && shifting_card_value == 1) {
         this.foundationPiles.getPiles().get(destPileNumber).addFirst(card_shifting);
@@ -235,16 +237,17 @@ public class FreecellModel implements FreecellOperations {
               value_table
                       .get(this.foundationPiles.getPiles()
                               .get(destPileNumber)
-                              .peek()
+                              .peekLast()
                               .getValue()) == 1
-              && card_shifting.getSuite().equals(
+              && card_shifting.getColor().equals(
               this.foundationPiles
                       .getPiles()
                       .get(destPileNumber)
-                      .peek()
-                      .getSuite())
-      ) {
-        this.foundationPiles.getPiles().get(pileNumber).addFirst(card_shifting);
+                      .peekLast()
+                      .getColor())) {
+
+
+        this.foundationPiles.getPiles().get(destPileNumber).addLast(card_shifting);
       }
     }
 
