@@ -135,6 +135,7 @@ public class FreecellModel implements FreecellOperations {
   @Override
   public void startGame(List deck, boolean shuffle) throws IllegalArgumentException {
     if(deck.size() == 52){
+      System.out.println("here1");
       CardDeck new_deck = new Cards();
       Cards[] control_deck = new Cards[52];
       List<Cards> test_deck = new_deck.createDeck();
@@ -150,7 +151,7 @@ public class FreecellModel implements FreecellOperations {
               .map(a -> a.getValue() + a.getSuite())
               .collect(Collectors.toList());
 
-      if(!control_list.containsAll(exp_list)) {
+      if(!exp_list.containsAll(control_list)) {
         throw new IllegalArgumentException("Invalid Deck");
       }
     } else {
@@ -404,7 +405,7 @@ public class FreecellModel implements FreecellOperations {
     // then the cards that are there
     // then new space
     StringBuilder build_state = new StringBuilder();
-    String pile_state = initialString + String.valueOf(pileNumber + 1) + ": ";
+    String pile_state = initialString + String.valueOf(pileNumber + 1) + ":";
     Cards[] pile = new Cards[pilesInput.get(pileNumber).size()];
 
     pilesInput.get(pileNumber).toArray(pile);
@@ -417,9 +418,9 @@ public class FreecellModel implements FreecellOperations {
     }
     for (String state : state_list) {
       if (state.equals(state_list.get(state_list.size() - 1))) {
-        build_state.append(state + "\n");
+        build_state.append(" " + state + "\n");
       } else {
-        build_state.append(state + ", ");
+        build_state.append(" " + state + ",");
       }
     }
 

@@ -44,9 +44,10 @@ public void iniTest() {
     Cards extra_card = cards.get(1);
     cards.add(extra_card);
     cards.remove(4);
-
+    System.out.println(cards);
     assertEquals("", testModel2.getGameState());
-    testModel.startGame(cards, true);
+    testModel.startGame(cards, false);
+    System.out.println(testModel2.getGameState());
   }
 
 /**
@@ -77,14 +78,15 @@ public void testGetDeck(){
   assertEquals(52, testModel.getDeck().size());
   testModel.startGame(deck, false);
   String st= testModel.getGameState();
-  assertEquals(st,"F1: \n" +
-          "F2: \n" +
-          "F3: \n" +
-          "F4: \n" +
-          "O1: \n" +
-          "O2: \n" +
-          "O3: \n" +
-          "O4: \n" +
+    System.out.println(st);
+  assertEquals(st,"F1:\n" +
+          "F2:\n" +
+          "F3:\n" +
+          "F4:\n" +
+          "O1:\n" +
+          "O2:\n" +
+          "O3:\n" +
+          "O4:\n" +
           "C1: K♥, J♥, 9♥, 7♥, 5♥, 3♥, A♥\n" +
           "C2: K♦, J♦, 9♦, 7♦, 5♦, 3♦, A♦\n" +
           "C3: K♠, J♠, 9♠, 7♠, 5♠, 3♠, A♠\n" +
