@@ -134,7 +134,7 @@ public class FreecellModel implements FreecellOperations {
    */
   @Override
   public void startGame(List deck, boolean shuffle) throws IllegalArgumentException {
-    if(deck.size() == 52){
+    if (deck.size() == 52) {
       CardDeck new_deck = new Cards();
       Cards[] control_deck = new Cards[52];
       List<Cards> test_deck = new_deck.createDeck();
@@ -150,7 +150,7 @@ public class FreecellModel implements FreecellOperations {
               .map(a -> a.getValue() + a.getSuite())
               .collect(Collectors.toList());
 
-      if(!control_list.containsAll(exp_list)) {
+      if (!control_list.containsAll(exp_list)) {
         throw new IllegalArgumentException("Invalid Deck");
       }
     } else {
@@ -162,10 +162,10 @@ public class FreecellModel implements FreecellOperations {
     /** what id startgame is called after another game has already been started.
      * we need to reset all values back to the original state after the builder was called....
      * whats the best way to do this?
-    if (hasGameBegun) {
-      hasGameBegun = false;
+     if (hasGameBegun) {
+     hasGameBegun = false;
 
-    }*/
+     }*/
     // if shuffle input is true the shuffle the deck.
     if (shuffle) {
       // Collections.shuffle() method randomly shuffle a Collections object.
@@ -198,7 +198,7 @@ public class FreecellModel implements FreecellOperations {
 
   }
 
-  public Cards getShiftingCard(List<LinkedList<Cards>> pilesInput, int pileNumber, int cardValue){
+  public Cards getShiftingCard(List<LinkedList<Cards>> pilesInput, int pileNumber, int cardValue) {
     Cards shifting_card = new Cards();
     // check if chosen pile is empty
     if (!pilesInput.get(pileNumber).isEmpty()) {
@@ -348,7 +348,21 @@ public class FreecellModel implements FreecellOperations {
    */
   @Override
   public boolean isGameOver() {
-    return false;
+    boolean value = false;
+
+    if (this.foundationPiles.getPiles().get(0).size() == 13) {
+      if (this.foundationPiles.getPiles().get(1).size() == 13) {
+        if (this.foundationPiles.getPiles().get(2).size() == 13) {
+          if (this.foundationPiles.getPiles().get(3).size() == 13) {
+            value = true;
+          }
+        }
+      }
+
+    } else {
+      value = false;
+    }
+    return value;
   }
 
   /**

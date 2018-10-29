@@ -19,7 +19,9 @@ public class testMain {
     List<T> deck = model.getDeck();
     model.startGame(deck, false);
     System.out.print(model.getGameState());
-    //System.out.println("**********************************************************");
+    System.out.println("**********************************************************");
+    System.out.println("**********************************************************");
+    System.out.println("**********************************************************");
 
     model.move(PileType.CASCADE, 0, 1, PileType.FOUNDATION, 0);
     model.move(PileType.CASCADE, 1, 1, PileType.FOUNDATION, 1);
@@ -81,6 +83,8 @@ public class testMain {
     model.move(PileType.CASCADE, 6, 12, PileType.FOUNDATION, 2);
     model.move(PileType.CASCADE, 7, 12, PileType.FOUNDATION, 3);
 
+    System.out.println(model.isGameOver());
+
     model.move(PileType.CASCADE, 0, 13, PileType.FOUNDATION, 0);
     model.move(PileType.CASCADE, 1, 13, PileType.FOUNDATION, 1);
     model.move(PileType.CASCADE, 2, 13, PileType.FOUNDATION, 2);
@@ -119,5 +123,6 @@ public class testMain {
   */
     System.out.print(model.getGameState());
 
+    System.out.println(model.isGameOver());
   }
 }
