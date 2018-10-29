@@ -149,7 +149,8 @@ public class FreecellModel implements FreecellOperations {
       List<String> exp_list = Arrays.stream(exp_deck)
               .map(a -> a.getValue() + a.getSuite())
               .collect(Collectors.toList());
-      if(!exp_list.containsAll(control_list)) {
+
+      if(!control_list.containsAll(exp_list)) {
         throw new IllegalArgumentException("Invalid Deck");
       }
     } else {
