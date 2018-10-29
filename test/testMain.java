@@ -9,7 +9,7 @@ public class testMain {
 
     helper(FreecellModel
             .getBuilder()
-            .cascades(8)
+            .cascades(6)
             .opens(4)
             .build());
 

@@ -133,8 +133,7 @@ public class FreecellModel implements FreecellOperations {
    * @throws IllegalArgumentException if the deck is invalid.
    */
   @Override
-  public void
-  startGame(List deck, boolean shuffle) throws IllegalArgumentException {
+  public void startGame(List deck, boolean shuffle) throws IllegalArgumentException {
 
     if(deck.size() == 52){
       CardDeck new_deck = new Cards();
@@ -158,6 +157,13 @@ public class FreecellModel implements FreecellOperations {
     } else {
       throw new IllegalArgumentException("Invalid Deck");
     }
+    /** what id startgame is called after another game has already been started.
+     * we need to reset all values back to the original state after the builder was called....
+     * whats the best way to do this?
+    if (hasGameBegun) {
+      hasGameBegun = false;
+
+    }*/
     // if shuffle input is true the shuffle the deck.
     if (shuffle) {
       // Collections.shuffle() method randomly shuffle a Collections object.
@@ -422,6 +428,4 @@ public class FreecellModel implements FreecellOperations {
     pile_state += build_state.toString();
     return pile_state;
   }
-
-
 }

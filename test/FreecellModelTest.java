@@ -9,15 +9,39 @@ import freecell.model.FreecellModel;
 import static org.junit.Assert.*;
 
 public class FreecellModelTest {
-private FreecellModel testModel;
-private CardDeck cards;
+  private FreecellModel testModel;
+  private FreecellModel testModel2;
+
+  private CardDeck cards;
 
   /**
    *
    */
 @Before
 public void setUp() {
-  testModel = new FreecellModel(4, 8);
+  testModel = FreecellModel
+          .getBuilder()
+          .build();
+
+  testModel2 = FreecellModel
+          .getBuilder()
+          .cascades(4)
+          .opens(2)
+          .build();
+}
+
+@Test
+public void iniTest() {
+  assertEquals("", testModel2.getGameState());
+  System.out.println(testModel2.getGameState());
+
+  testModel2.startGame(testModel2.getDeck(), true);
+  assertEquals(52, testModel2.getDeck().size());
+  System.out.println(testModel2.getGameState());
+
+  testModel2.startGame(testModel2.getDeck(), true);
+  assertEquals(52, testModel2.getDeck().size());
+  System.out.println(testModel2.getGameState());
 }
 
 /**
