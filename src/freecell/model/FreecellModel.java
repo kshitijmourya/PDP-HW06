@@ -134,7 +134,7 @@ public class FreecellModel implements FreecellOperations {
    */
   @Override
   public void startGame(List deck, boolean shuffle) throws IllegalArgumentException {
-    if (deck.size() == 52) {
+    if(deck.size() == 52){
       CardDeck new_deck = new Cards();
       Cards[] control_deck = new Cards[52];
       List<Cards> test_deck = new_deck.createDeck();
@@ -150,7 +150,7 @@ public class FreecellModel implements FreecellOperations {
               .map(a -> a.getValue() + a.getSuite())
               .collect(Collectors.toList());
 
-      if (!control_list.containsAll(exp_list)) {
+      if(!control_list.containsAll(exp_list)) {
         throw new IllegalArgumentException("Invalid Deck");
       }
     } else {
@@ -162,10 +162,10 @@ public class FreecellModel implements FreecellOperations {
     /** what id startgame is called after another game has already been started.
      * we need to reset all values back to the original state after the builder was called....
      * whats the best way to do this?
-     if (hasGameBegun) {
-     hasGameBegun = false;
+    if (hasGameBegun) {
+      hasGameBegun = false;
 
-     }*/
+    }*/
     // if shuffle input is true the shuffle the deck.
     if (shuffle) {
       // Collections.shuffle() method randomly shuffle a Collections object.
@@ -198,7 +198,7 @@ public class FreecellModel implements FreecellOperations {
 
   }
 
-  public Cards getShiftingCard(List<LinkedList<Cards>> pilesInput, int pileNumber, int cardValue) {
+  public Cards getShiftingCard(List<LinkedList<Cards>> pilesInput, int pileNumber, int cardValue){
     Cards shifting_card = new Cards();
     // check if chosen pile is empty
     if (!pilesInput.get(pileNumber).isEmpty()) {
@@ -348,50 +348,7 @@ public class FreecellModel implements FreecellOperations {
    */
   @Override
   public boolean isGameOver() {
-
-    boolean value;
-    if (helperGameOver()) {
-      value = true;
-    } else {
-      value = false;
-    }
-
-    return value;
-  }
-
-  private boolean helperGameOver() {
-    // Check if open pile if space left....if user wins there would be space on open pile.
-    // foundation piles moves to cascade piles.
-    // open pile move to cascade.
-    //open pile move to foundation.
-    //cascade moves to foundation.
-    //cascade moves to cascade.
-
-    boolean value = false;
-    //if foundation piles are piles then user has won the game.
-    //need to check for mutation.
-    if (foundationPilesFull()) {
-      value = true;
-    }
-
-    //no further moves means it's a stalemate and user has lost and game is over.
-    if (noFurtherMoves()) {
-      value = true;
-    }
-    return value;
-
-  }
-
-  private boolean foundationPilesFull() {
-    if (this.foundationPiles.getPiles().size() == 52) return true;
-    else return false;
-  }
-
-  private boolean noFurtherMoves() {
-    boolean value = false;
-
-
-    return value;
+    return false;
   }
 
   /**

@@ -32,18 +32,22 @@ public void setUp() {
 
 @Test
 public void iniTest() {
-  List<Cards> cards = testModel2.getDeck();
-  Cards extra_card = cards.get(1);
-  cards.add(extra_card);
-  cards.remove(4);
-
-  assertEquals("", testModel2.getGameState());
-  testModel.startGame(cards, true);
   assertEquals("", testModel2.getGameState());
 
   testModel2.startGame(testModel2.getDeck(), true);
   assertEquals(52, testModel2.getDeck().size());
 }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void iniTestFail() {
+    List<Cards> cards = testModel2.getDeck();
+    Cards extra_card = cards.get(1);
+    cards.add(extra_card);
+    cards.remove(4);
+
+    assertEquals("", testModel2.getGameState());
+    testModel.startGame(cards, true);
+  }
 
 /**
  * Test for getting valid deck.
