@@ -41,7 +41,7 @@ public class FreecellModel implements FreecellOperations {
    * @param opens
    * @param cascades
    */
-  public FreecellModel(int opens, int cascades) {
+  private FreecellModel(int opens, int cascades) {
     this.deck_of_cards = new Cards();
     this.opens = opens;
     this.cascades = cascades;

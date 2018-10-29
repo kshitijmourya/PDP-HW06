@@ -18,7 +18,7 @@ public class testMain {
   private static <T> void helper(freecell.model.FreecellOperations<T> model) {
     List<T> deck = model.getDeck();
     model.startGame(deck, false);
-    //System.out.print(model.getGameState());
+    System.out.print(model.getGameState());
     //System.out.println("**********************************************************");
 
     model.move(PileType.CASCADE, 0, 1, PileType.FOUNDATION, 0);
