@@ -17,13 +17,13 @@ public class FreecellModelTest {
   /**
    *
    */
-@Before
-public void setUp() {
-  testModel = FreecellModel
+  @Before
+  public void setUp() {
+    testModel = FreecellModel
           .getBuilder()
           .build();
 
-  testModel2 = FreecellModel
+    testModel2 = FreecellModel
           .getBuilder()
           .cascades(4)
           .opens(2)
@@ -70,9 +70,9 @@ public void testGetDeck(){
  * test1- With shuffling
  * test 2 - Without shuffling.
  */
-//Remove whitespace from the last line in the expected output.
-@Test
-public void testStartGame1(){
+  //Remove whitespace from the last line in the expected output.
+  @Test
+  public void testStartGame1(){
   List deck = testModel.getDeck();
   assertEquals(52, testModel.getDeck().size());
   testModel.startGame(deck, false);
@@ -119,23 +119,20 @@ public void testStartGame1(){
             "C8: Q♣, 10♣, 8♣, 6♣, 4♣, 2♣");
   }
 
-/**
+  /**
  * Tests for all decks are valid after startGame().
  */
-@Test
-public void testAllValidDecks(){
+  @Test
+  public void testAllValidDecks(){
 
 
 }
 
-
-
-
-/**
+  /**
  * Combination of move and getGamestate().
  */
-@Test
-public void testGameState1(){
+  @Test
+  public void testGameState1(){
   // Return empty string before game has begun.
 
   assertEquals(testModel.getGameState(),"");
@@ -151,7 +148,7 @@ public void testGameState1(){
   //various move() method calls.
     //Get game state and assert that.
   }
-// A lot of similar test methods to check gameState.
+  // A lot of similar test methods to check gameState.
 // check for invalid moves.
 // java.lang.IllegalArgumentException - if the move is not possible PileType)
 // java.lang.IllegalStateException - if a move is attempted before the game has starts.
@@ -160,19 +157,17 @@ public void testGameState1(){
 // check for invalid middle value of move method.
 // card at index o of source pile should match the value passed here.
 
-/**
+  /**
  * Tests for isGameOver().
  * True: If users wins
  * True: If user cannot make any move(User loser).
  * False: User can move cards.
  */
-@Test
-public void testGameOver()
-{}
+  @Test
+  public void testGameOver() {}
 
-
-@Test
-public void startInvalidGame(){
+  @Test
+  public void startInvalidGame(){
 
 }
 }

@@ -75,16 +75,22 @@ public class testMain {
     model.move(PileType.CASCADE, 1, 11, PileType.FOUNDATION, 1);
     model.move(PileType.CASCADE, 2, 11, PileType.FOUNDATION, 2);
     model.move(PileType.CASCADE, 3, 11, PileType.FOUNDATION, 3);
+    System.out.print("\n***************************\n");
 
-    model.move(PileType.CASCADE, 4, 12, PileType.FOUNDATION, 0);
-    model.move(PileType.CASCADE, 5, 12, PileType.FOUNDATION, 1);
-    model.move(PileType.CASCADE, 6, 12, PileType.FOUNDATION, 2);
-    model.move(PileType.CASCADE, 7, 12, PileType.FOUNDATION, 3);
+    System.out.print(model.getGameState());
 
-    model.move(PileType.CASCADE, 0, 13, PileType.FOUNDATION, 0);
-    model.move(PileType.CASCADE, 1, 13, PileType.FOUNDATION, 1);
-    model.move(PileType.CASCADE, 2, 13, PileType.FOUNDATION, 2);
-    model.move(PileType.CASCADE, 3, 13, PileType.FOUNDATION, 3);
+    model.move(PileType.FOUNDATION, 0, 12, PileType.OPEN, 0);
+    model.move(PileType.FOUNDATION, 1, 12, PileType.OPEN, 1);
+    model.move(PileType.FOUNDATION, 2, 12, PileType.OPEN, 2);
+    model.move(PileType.FOUNDATION, 3, 12, PileType.OPEN, 3);
+    System.out.print("\n***************************\n");
+
+    System.out.print(model.getGameState());
+
+    model.move(PileType.CASCADE, 0, 13, PileType.OPEN, 0);
+    model.move(PileType.CASCADE, 1, 13, PileType.OPEN, 1);
+    model.move(PileType.CASCADE, 2, 13, PileType.OPEN, 2);
+    model.move(PileType.CASCADE, 3, 13, PileType.OPEN, 3);
 
 
 /*

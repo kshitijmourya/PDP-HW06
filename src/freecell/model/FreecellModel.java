@@ -100,7 +100,7 @@ public class FreecellModel implements FreecellOperations {
      *
      * @return
      */
-    public FreecellOperations build() {
+    public FreecellOperations<?> build() {
       return new FreecellModel(opens, cascades);
     }
   }
@@ -186,7 +186,7 @@ public class FreecellModel implements FreecellOperations {
         if (!copy_deck.isEmpty()) {
           // had to cast to get working, I don't know what K means in the interface but its
           // keeping me from making the deck as List<Cards>. Ask in office hours.
-          this.cascadePiles.getPiles().get(i).addFirst((Cards) copy_deck.get(0));
+          this.cascadePiles.getPiles().get(i).addFirst(copy_deck.get(0));
           copy_deck.remove(0);
         } else {
           break;
