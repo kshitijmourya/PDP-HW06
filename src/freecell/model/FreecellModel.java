@@ -55,14 +55,14 @@ public class FreecellModel implements FreecellOperations {
    *
    * @return
    */
-  public static FreecellModelBuilder getBuilder() {
-    return new FreecellModelBuilder();
+  public static freecell.model.FreecellOperationsBuilder getBuilder() {
+    return new FreecellOperationsBuilder();
   }
 
   /**
    *
    */
-  public static class FreecellModelBuilder implements FreecellOperationsBuilder {
+  public static class FreecellOperationsBuilder implements freecell.model.FreecellOperationsBuilder {
     CardDeck deck_of_cards;
     int opens;
     int cascades;
@@ -70,7 +70,7 @@ public class FreecellModel implements FreecellOperations {
     /**
      *
      */
-    public FreecellModelBuilder() {
+    public FreecellOperationsBuilder() {
       this.deck_of_cards = new Cards();
       this.opens = 4;
       this.cascades = 8;
@@ -81,7 +81,7 @@ public class FreecellModel implements FreecellOperations {
      * @param opens
      * @return
      */
-    public FreecellModelBuilder opens(int opens) {
+    public FreecellOperationsBuilder opens(int opens) {
       this.opens = opens;
       return this;
     }
@@ -91,7 +91,7 @@ public class FreecellModel implements FreecellOperations {
      * @param cascades
      * @return
      */
-    public FreecellModelBuilder cascades(int cascades) {
+    public FreecellOperationsBuilder cascades(int cascades) {
       this.cascades = cascades;
       return this;
     }
@@ -100,7 +100,7 @@ public class FreecellModel implements FreecellOperations {
      *
      * @return
      */
-    public FreecellModel build() {
+    public FreecellOperations build() {
       return new FreecellModel(opens, cascades);
     }
   }
@@ -134,7 +134,6 @@ public class FreecellModel implements FreecellOperations {
    */
   @Override
   public void startGame(List deck, boolean shuffle) throws IllegalArgumentException {
-
     if(deck.size() == 52){
       CardDeck new_deck = new Cards();
       Cards[] control_deck = new Cards[52];
@@ -157,6 +156,9 @@ public class FreecellModel implements FreecellOperations {
     } else {
       throw new IllegalArgumentException("Invalid Deck");
     }
+
+    List<Cards> copy_deck = new ArrayList<Cards>();
+    copy_deck.addAll(deck);
     /** what id startgame is called after another game has already been started.
      * we need to reset all values back to the original state after the builder was called....
      * whats the best way to do this?
@@ -167,7 +169,7 @@ public class FreecellModel implements FreecellOperations {
     // if shuffle input is true the shuffle the deck.
     if (shuffle) {
       // Collections.shuffle() method randomly shuffle a Collections object.
-      Collections.shuffle(deck);
+      Collections.shuffle(copy_deck);
     }
 
     // got the number of cascade piles from cascade piles. Could have used this.cascades instead
@@ -177,16 +179,16 @@ public class FreecellModel implements FreecellOperations {
 
     // in the while-loop below, as cards in the deck are being used, they are being removed
     // so the condition here is to keep looping until there are no more cards in the deck.
-    while (!deck.isEmpty()) {
+    while (!copy_deck.isEmpty()) {
       // for each pile in the cascade section, get the top card in the deck and add it to the pile.
       for (int i = 0; i < number_of_piles; i++) {
         // if the deck becomes empty as it is distributing cards then the process of distribution
         // will stop and the loop will break.
-        if (!deck.isEmpty()) {
+        if (!copy_deck.isEmpty()) {
           // had to cast to get working, I don't know what K means in the interface but its
           // keeping me from making the deck as List<Cards>. Ask in office hours.
-          this.cascadePiles.getPiles().get(i).addFirst((Cards) deck.get(0));
-          deck.remove(0);
+          this.cascadePiles.getPiles().get(i).addFirst((Cards) copy_deck.get(0));
+          copy_deck.remove(0);
         } else {
           break;
         }
@@ -202,7 +204,6 @@ public class FreecellModel implements FreecellOperations {
     if (!pilesInput.get(pileNumber).isEmpty()) {
       // get value of first card in chosen pile
       int shifting_card_value = value_table.get(pilesInput.get(pileNumber).peekLast().getValue());
-      System.out.println(shifting_card_value);
       // check if value of first card matches cardIndex given by user.
       // If yes get card, else reject.
       if (shifting_card_value == cardValue) {
@@ -224,7 +225,6 @@ public class FreecellModel implements FreecellOperations {
     }
 
     if (source.equals(PileType.CASCADE)) {
-      System.out.println("here");
       this.cascadePiles.getPiles().get(pileNumber).pollLast();
     }
   }
@@ -264,7 +264,6 @@ public class FreecellModel implements FreecellOperations {
     }
 
     int shifting_card_value = value_table.get(card_shifting.getValue());
-   // System.out.println(shifting_card_value);
 
     // if detination is open pile, make sure it is empty.
     if (destination.equals(PileType.OPEN)) {
@@ -281,7 +280,6 @@ public class FreecellModel implements FreecellOperations {
 
     if (destination.equals(PileType.FOUNDATION)) {
 
-     // System.out.println("here1");
       // if pile is empty and the card being moved is an ACE, then add it to the pile.
       if (this.foundationPiles.getPiles().get(destPileNumber).isEmpty() && shifting_card_value == 1) {
         this.foundationPiles.getPiles().get(destPileNumber).addFirst(card_shifting);
