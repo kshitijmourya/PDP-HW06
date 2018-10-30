@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
  * This class implements FreecellOperations Interface.
  */
 public class FreecellModel implements FreecellOperations {
+  private final int cascades;
   private CardDeck deck_of_cards;
   private Piles openPiles;
   private Piles cascadePiles;
@@ -38,16 +39,21 @@ public class FreecellModel implements FreecellOperations {
     }
   };
 
+  public static FreecellModelBuilder getBuilder() {
+
+    return new FreecellModelBuilder();
+  }
+
   /**
    * creates new freecellmodel.
    *
    * @param opens    opens piles.
    * @param cascades cascades piles.
    */
-  private FreecellModel(int opens, int cascades) {
+  private FreecellModel(int opens, int cascades) throws IllegalArgumentException {
     this.deck_of_cards = new Cards();
     this.opens = opens;
-    int cascades1 = cascades;
+    this.cascades = cascades;
 
     if (opens < 1 || cascades < 4) {
       throw new IllegalArgumentException("Minimum Open piles should be 1 and" +
@@ -58,63 +64,38 @@ public class FreecellModel implements FreecellOperations {
     this.foundationPiles = new Piles(4, PileType.FOUNDATION);
   }
 
-  /**
-   * builder method.
-   *
-   * @return builder method.
-   */
-  public static freecell.model.FreecellOperationsBuilder getBuilder() {
-    return new FreecellOperationsBuilder();
-  }
+  public static class FreecellModelBuilder implements FreecellOperationsBuilder {
 
-  /**
-   * builder method.
-   */
-  public static class FreecellOperationsBuilder
-          implements freecell.model.FreecellOperationsBuilder {
-    CardDeck deck_of_cards;
-    int opens;
-    int cascades;
+    private int opensPiles;
+    private int cascadesPiles;
 
-    /**
-     * builder method.
-     */
-    public FreecellOperationsBuilder() {
-      this.deck_of_cards = new Cards();
-      this.opens = 4;
-      this.cascades = 8;
+    private FreecellModelBuilder() {
+
+      opensPiles = 4;
+      cascadesPiles = 8;
     }
 
-    /**
-     * builder method.
-     *
-     * @param opens open pile count.
-     * @return reference.
-     */
-    public FreecellOperationsBuilder opens(int opens) {
-      this.opens = opens;
+    @Override
+    public FreecellOperationsBuilder cascades(int opens) {
+
+      opensPiles = opens;
       return this;
     }
 
-    /**
-     * builder method.
-     *
-     * @param cascades cascade pile count.
-     * @return reference.
-     */
-    public FreecellOperationsBuilder cascades(int cascades) {
-      this.cascades = cascades;
+    @Override
+    public FreecellOperationsBuilder opens(int cascades) {
+
+      cascadesPiles = cascades;
       return this;
     }
 
-    /**
-     * builder method.
-     *
-     * @return new model.
-     */
-    public FreecellOperations<?> build() {
-      return new FreecellModel(opens, cascades);
+
+    @Override
+    public <K> FreecellOperations<K> build() {
+
+      return new FreecellModel(opensPiles, cascadesPiles);
     }
+
   }
 
   /**
