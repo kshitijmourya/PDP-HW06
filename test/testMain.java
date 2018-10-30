@@ -9,7 +9,7 @@ public class testMain {
 
     helper(FreecellModel
             .getBuilder()
-            .cascades(8)
+            .cascades(4)
             .opens(4)
             .build());
 
@@ -21,19 +21,19 @@ public class testMain {
     System.out.print(model.getGameState());
     System.out.println("**********************************************************");
 
-    model.move(PileType.CASCADE, 0, 1, PileType.OPEN, 0);
-    model.move(PileType.CASCADE, 1, 1, PileType.OPEN, 1);
-    model.move(PileType.CASCADE, 2, 1, PileType.OPEN, 2);
-    model.move(PileType.CASCADE, 3, 1, PileType.OPEN, 3);
+    model.move(PileType.CASCADE, 0, 13, PileType.OPEN, 0);
+    model.move(PileType.CASCADE, 1, 13, PileType.OPEN, 1);
+    model.move(PileType.CASCADE, 2, 13, PileType.OPEN, 2);
+    model.move(PileType.CASCADE, 3, 13, PileType.OPEN, 3);
     System.out.println(model.getGameState());
     System.out.println("**********************************************************");
-
+    /**
     model.move(PileType.OPEN, 0, 1, PileType.FOUNDATION, 0);
     model.move(PileType.OPEN, 1, 1, PileType.FOUNDATION, 1);
     model.move(PileType.OPEN, 2, 1, PileType.FOUNDATION, 2);
     model.move(PileType.OPEN, 3, 1, PileType.FOUNDATION, 3);
     System.out.println(model.getGameState());
-    /**
+
     model.move(PileType.CASCADE, 0, 3, PileType.FOUNDATION, 0);
     model.move(PileType.CASCADE, 1, 3, PileType.FOUNDATION, 1);
     model.move(PileType.CASCADE, 2, 3, PileType.FOUNDATION, 2);
