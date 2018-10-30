@@ -49,6 +49,10 @@ public class FreecellModel implements FreecellOperations {
     this.opens = opens;
     int cascades1 = cascades;
 
+    if (opens < 1 || cascades < 4) {
+      throw new IllegalArgumentException("Minimum Open piles should be 1 and" +
+              " cascade piles should be 4");
+    }
     this.openPiles = new Piles(opens, PileType.OPEN);
     this.cascadePiles = new Piles(cascades, PileType.CASCADE);
     this.foundationPiles = new Piles(4, PileType.FOUNDATION);

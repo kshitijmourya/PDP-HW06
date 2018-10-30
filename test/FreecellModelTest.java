@@ -29,6 +29,7 @@ public class FreecellModelTest {
             .cascades(4)
             .opens(2)
             .build();
+
   }
 
   @Test
