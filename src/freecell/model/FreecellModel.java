@@ -18,23 +18,27 @@ public class FreecellModel implements FreecellOperations {
   private Piles foundationPiles;
   private boolean hasGameBegun = false;
 
-  private final HashMap<String, Integer> value_table = new HashMap<String, Integer>() {{
-    put("A", 1);
-    put("2", 2);
-    put("3", 3);
-    put("4", 4);
-    put("5", 5);
-    put("6", 6);
-    put("7", 7);
-    put("8", 8);
-    put("9", 9);
-    put("10", 10);
-    put("J", 11);
-    put("Q", 12);
-    put("K", 13);
-  }};
+  private final HashMap<String, Integer> value_table = new HashMap<String, Integer>() {
+    {
+      put("A", 1);
+      put("2", 2);
+      put("3", 3);
+      put("4", 4);
+      put("5", 5);
+      put("6", 6);
+      put("7", 7);
+      put("8", 8);
+      put("9", 9);
+      put("10", 10);
+      put("J", 11);
+      put("Q", 12);
+      put("K", 13);
+    }
+  };
 
   /**
+   * creates new freecellmodel.
+   *
    * @param opens    opens piles.
    * @param cascades cascades piles.
    */
@@ -60,7 +64,8 @@ public class FreecellModel implements FreecellOperations {
   /**
    * builder method.
    */
-  public static class FreecellOperationsBuilder implements freecell.model.FreecellOperationsBuilder {
+  public static class FreecellOperationsBuilder
+          implements freecell.model.FreecellOperationsBuilder {
     CardDeck deck_of_cards;
     int opens;
     int cascades;
@@ -306,7 +311,8 @@ public class FreecellModel implements FreecellOperations {
     if (destination.equals(PileType.FOUNDATION)) {
 
       // if pile is empty and the card being moved is an ACE, then add it to the pile.
-      if (this.foundationPiles.getPiles().get(destPileNumber).isEmpty() && shifting_card_value == 1) {
+      if (this.foundationPiles.getPiles().get(destPileNumber).isEmpty()
+              && shifting_card_value == 1) {
         this.foundationPiles.getPiles().get(destPileNumber).addFirst(card_shifting);
         removeCard(source, pileNumber);
       }
@@ -378,22 +384,11 @@ public class FreecellModel implements FreecellOperations {
     for (int i = 0; i < foundationPiles.getPiles().size(); i++) {
       if (this.foundationPiles.getPiles().get(i).size() == 13) {
         value = true;
-      } else
+      } else {
         value = false;
-    }
-  /*  if (this.foundationPiles.getPiles().get(0).size() == 13) {
-      if (this.foundationPiles.getPiles().get(1).size() == 13) {
-        if (this.foundationPiles.getPiles().get(2).size() == 13) {
-          if (this.foundationPiles.getPiles().get(3).size() == 13) {
-            value = true;
-          }
-        }
       }
-
-    } else {
-      value = false;
     }
-*/
+
     return value;
   }
 
@@ -451,7 +446,8 @@ public class FreecellModel implements FreecellOperations {
    * @param pilesInput    pile input in list form.
    * @return gives string of gamestate.
    */
-  private String helperGameState(String initialString, int pileNumber, List<LinkedList<Cards>> pilesInput) {
+  private String helperGameState(String initialString, int pileNumber,
+                                 List<LinkedList<Cards>> pilesInput) {
     // starting string is O
     // iteration number gets joined with O
     // the : gets added with a space after

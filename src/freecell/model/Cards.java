@@ -16,6 +16,10 @@ public class Cards implements CardDeck {
    * constructor for the class.
    */
   Cards() {
+    //empty constructor.
+    /*
+     *empty constructor
+     */
   }
 
   /**

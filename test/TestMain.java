@@ -10,9 +10,6 @@ public class TestMain {
    * @param args args.
    */
   public static void main(String[] args) {
-/**
- * helper function.
- */
     helper(FreecellModel
             .getBuilder()
             .cascades(8)
@@ -161,9 +158,9 @@ model.move(PileType.CASCADE,0,1,PileType.FOUNDATION,0);
 */
 
 
-//System.out.println(model.getGameState());
+    //System.out.println(model.getGameState());
 
-//model.move(PileType.CASCADE,0,13,PileType.OPEN,0);
+    //model.move(PileType.CASCADE,0,13,PileType.OPEN,0);
     //  model.move(PileType.CASCADE,1,13,PileType.OPEN,1);
     //model.move(PileType.CASCADE,2,13,PileType.OPEN,2);
     //model.move(PileType.CASCADE,3,13,PileType.OPEN,3);
