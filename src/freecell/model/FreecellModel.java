@@ -19,7 +19,6 @@ public class FreecellModel implements FreecellOperations {
   private boolean hasGameBegun = false;
   private int count;
   private int opens;
-  private int cascades;
 
   private final HashMap<String, Integer> value_table = new HashMap<String, Integer>() {
     {
@@ -48,7 +47,7 @@ public class FreecellModel implements FreecellOperations {
   private FreecellModel(int opens, int cascades) {
     this.deck_of_cards = new Cards();
     this.opens = opens;
-    this.cascades = cascades;
+    int cascades1 = cascades;
 
     this.openPiles = new Piles(opens, PileType.OPEN);
     this.cascadePiles = new Piles(cascades, PileType.CASCADE);
@@ -204,7 +203,8 @@ public class FreecellModel implements FreecellOperations {
       // in the while-loop below, as cards in the deck are being used, they are being removed
       // so the condition here is to keep looping until there are no more cards in the deck.
       while (!copy_deck.isEmpty()) {
-        // for each pile in the cascade section, get the top card in the deck and add it to the pile.
+        // for each pile in the cascade section,
+        // get the top card in the deck and add it to the pile.
         for (int i = 0; i < number_of_piles; i++) {
           // if the deck becomes empty as it is distributing cards then the process of distribution
           // will stop and the loop will break.
@@ -392,11 +392,10 @@ public class FreecellModel implements FreecellOperations {
 
     for (int i = 0; i < foundationPiles.getPiles().size(); i++) {
       if (this.foundationPiles.getPiles().get(i).size() == 13) {
-        for(int j=0;j<openPiles.getPiles().size();j++){
-          if(this.openPiles.getPiles().get(i).size()==0)
-          {
-            for(int k=0;k<cascadePiles.getPiles().size();k++){
-              if(this.cascadePiles.getPiles().get(k).size()==0){
+        for (int j = 0; j < openPiles.getPiles().size(); j++) {
+          if (this.openPiles.getPiles().get(i).size() == 0) {
+            for (int k = 0; k < cascadePiles.getPiles().size(); k++) {
+              if (this.cascadePiles.getPiles().get(k).size() == 0) {
                 value = true;
               }
             }
