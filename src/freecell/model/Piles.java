@@ -6,16 +6,16 @@ import java.util.List;
 
 public class Piles implements CardPiles {
   private PileType type;
-  private int pileCount;
   private List<LinkedList<Cards>> piles;
 
   /**
+   * constructor to initialize card piles.
    *
-   * @param pileCount
-   * @param type
+   * @param pileCount count in int.
+   * @param type      which type of pile.
    */
-  public Piles(int pileCount, PileType type){
-    this.pileCount = pileCount;
+  public Piles(int pileCount, PileType type) {
+    int pileCount1 = pileCount;
     this.type = type;
     this.piles = new ArrayList<LinkedList<Cards>>();
 
@@ -25,18 +25,20 @@ public class Piles implements CardPiles {
   }
 
   /**
+   * give the type of pile.
    *
-   * @return
+   * @return piletype enum.
    */
-  public PileType getType(){
+  public PileType getType() {
     return this.type;
   }
 
   /**
+   * gives the piles as list.
    *
-   * @return
+   * @return list.
    */
-  public List<LinkedList<Cards>> getPiles(){
+  public List<LinkedList<Cards>> getPiles() {
     return this.piles;
   }
 

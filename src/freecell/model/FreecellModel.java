@@ -16,8 +16,6 @@ public class FreecellModel implements FreecellOperations {
   private Piles openPiles;
   private Piles cascadePiles;
   private Piles foundationPiles;
-  private int opens;
-  private int cascades;
   private boolean hasGameBegun = false;
 
   private final HashMap<String, Integer> value_table = new HashMap<String, Integer>() {{
@@ -37,14 +35,13 @@ public class FreecellModel implements FreecellOperations {
   }};
 
   /**
-   *
-   * @param opens
-   * @param cascades
+   * @param opens    opens piles.
+   * @param cascades cascades piles.
    */
   private FreecellModel(int opens, int cascades) {
     this.deck_of_cards = new Cards();
-    this.opens = opens;
-    this.cascades = cascades;
+    int opens1 = opens;
+    int cascades1 = cascades;
 
     this.openPiles = new Piles(opens, PileType.OPEN);
     this.cascadePiles = new Piles(cascades, PileType.CASCADE);
@@ -52,15 +49,16 @@ public class FreecellModel implements FreecellOperations {
   }
 
   /**
+   * builder method.
    *
-   * @return
+   * @return builder method.
    */
   public static freecell.model.FreecellOperationsBuilder getBuilder() {
     return new FreecellOperationsBuilder();
   }
 
   /**
-   *
+   * builder method.
    */
   public static class FreecellOperationsBuilder implements freecell.model.FreecellOperationsBuilder {
     CardDeck deck_of_cards;
@@ -68,7 +66,7 @@ public class FreecellModel implements FreecellOperations {
     int cascades;
 
     /**
-     *
+     * builder method.
      */
     public FreecellOperationsBuilder() {
       this.deck_of_cards = new Cards();
@@ -77,9 +75,10 @@ public class FreecellModel implements FreecellOperations {
     }
 
     /**
+     * builder method.
      *
-     * @param opens
-     * @return
+     * @param opens open pile count.
+     * @return reference.
      */
     public FreecellOperationsBuilder opens(int opens) {
       this.opens = opens;
@@ -87,9 +86,10 @@ public class FreecellModel implements FreecellOperations {
     }
 
     /**
+     * builder method.
      *
-     * @param cascades
-     * @return
+     * @param cascades cascade pile count.
+     * @return reference.
      */
     public FreecellOperationsBuilder cascades(int cascades) {
       this.cascades = cascades;
@@ -97,8 +97,9 @@ public class FreecellModel implements FreecellOperations {
     }
 
     /**
+     * builder method.
      *
-     * @return
+     * @return new model.
      */
     public FreecellOperations<?> build() {
       return new FreecellModel(opens, cascades);
@@ -134,6 +135,7 @@ public class FreecellModel implements FreecellOperations {
    */
   @Override
   public void startGame(List deck, boolean shuffle) throws IllegalArgumentException {
+
     if (deck.size() == 52) {
       //System.out.println("here1");
       CardDeck new_deck = new Cards();
@@ -160,13 +162,20 @@ public class FreecellModel implements FreecellOperations {
 
     List<Cards> copy_deck = new ArrayList<Cards>();
     copy_deck.addAll(deck);
-    /** what id startgame is called after another game has already been started.
+
+    /*
+     *  what id startgame is called after another game has already been started.
      * we need to reset all values back to the original state after the builder was called....
      * whats the best way to do this?
+
      if (hasGameBegun) {
      hasGameBegun = false;
-
-     }*/
+     this.openPiles.getPiles().clear();
+     this.foundationPiles.getPiles().clear();
+     this.cascadePiles.getPiles().clear();
+     this.startGame(deck,shuffle);
+     }
+     */
     // if shuffle input is true the shuffle the deck.
     if (shuffle) {
       // Collections.shuffle() method randomly shuffle a Collections object.
@@ -199,6 +208,15 @@ public class FreecellModel implements FreecellOperations {
 
   }
 
+  /**
+   * method to getshiftingcard.
+   *
+   * @param pilesInput input pile type.
+   * @param pileNumber input pile number.
+   * @param cardValue  the face value of card.
+   * @return the card to shift.
+   */
+
   public Cards getShiftingCard(List<LinkedList<Cards>> pilesInput, int pileNumber, int cardValue) {
     Cards shifting_card = new Cards();
     // check if chosen pile is empty
@@ -216,6 +234,12 @@ public class FreecellModel implements FreecellOperations {
     return shifting_card;
   }
 
+  /**
+   * method to removeCard.
+   *
+   * @param source     piletype of source.
+   * @param pileNumber pile number of source.
+   */
   public void removeCard(PileType source, int pileNumber) {
     if (source.equals(PileType.FOUNDATION)) {
       this.foundationPiles.getPiles().get(pileNumber).pollLast();
@@ -351,7 +375,13 @@ public class FreecellModel implements FreecellOperations {
   public boolean isGameOver() {
     boolean value = false;
 
-    if (this.foundationPiles.getPiles().get(0).size() == 13) {
+    for (int i = 0; i < foundationPiles.getPiles().size(); i++) {
+      if (this.foundationPiles.getPiles().get(i).size() == 13) {
+        value = true;
+      } else
+        value = false;
+    }
+  /*  if (this.foundationPiles.getPiles().get(0).size() == 13) {
       if (this.foundationPiles.getPiles().get(1).size() == 13) {
         if (this.foundationPiles.getPiles().get(2).size() == 13) {
           if (this.foundationPiles.getPiles().get(3).size() == 13) {
@@ -363,6 +393,7 @@ public class FreecellModel implements FreecellOperations {
     } else {
       value = false;
     }
+*/
     return value;
   }
 
@@ -412,6 +443,14 @@ public class FreecellModel implements FreecellOperations {
     return gameState.trim();
   }
 
+  /**
+   * helper function to get gameState.
+   *
+   * @param initialString initiail string.
+   * @param pileNumber    pile number.
+   * @param pilesInput    pile input in list form.
+   * @return gives string of gamestate.
+   */
   private String helperGameState(String initialString, int pileNumber, List<LinkedList<Cards>> pilesInput) {
     // starting string is O
     // iteration number gets joined with O
