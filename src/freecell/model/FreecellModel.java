@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
  * This class implements FreecellOperations Interface.
  */
 public class FreecellModel implements FreecellOperations {
-  private final int cascades;
   private CardDeck deck_of_cards;
   private Piles openPiles;
   private Piles cascadePiles;
@@ -47,18 +46,18 @@ public class FreecellModel implements FreecellOperations {
   /**
    * creates new freecellmodel.
    *
-   * @param opens    opens piles.
    * @param cascades cascades piles.
+   * @param opens    opens piles.
    */
-  private FreecellModel(int opens, int cascades) throws IllegalArgumentException {
+  private FreecellModel(int cascades, int opens) throws IllegalArgumentException {
     this.deck_of_cards = new Cards();
     this.opens = opens;
-    this.cascades = cascades;
 
     if (opens < 1 || cascades < 4) {
-      throw new IllegalArgumentException("Minimum Open piles should be 1 and" +
-              " cascade piles should be 4");
+      throw new IllegalArgumentException("Minimum Open piles should be 1 and " +
+              "cascade piles should be 4");
     }
+
     this.openPiles = new Piles(opens, PileType.OPEN);
     this.cascadePiles = new Piles(cascades, PileType.CASCADE);
     this.foundationPiles = new Piles(4, PileType.FOUNDATION);
@@ -76,14 +75,14 @@ public class FreecellModel implements FreecellOperations {
     }
 
     @Override
-    public FreecellOperationsBuilder cascades(int opens) {
+    public FreecellOperationsBuilder opens(int opens) {
 
       opensPiles = opens;
       return this;
     }
 
     @Override
-    public FreecellOperationsBuilder opens(int cascades) {
+    public FreecellOperationsBuilder cascades(int cascades) {
 
       cascadesPiles = cascades;
       return this;
@@ -93,7 +92,7 @@ public class FreecellModel implements FreecellOperations {
     @Override
     public <K> FreecellOperations<K> build() {
 
-      return new FreecellModel(opensPiles, cascadesPiles);
+      return new FreecellModel(cascadesPiles, opensPiles);
     }
 
   }
@@ -227,7 +226,7 @@ public class FreecellModel implements FreecellOperations {
       if (shifting_card_value == cardValue) {
         shifting_card = pilesInput.get(pileNumber).peekLast();
       } else {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("Here is the exception");
       }
     }
     return shifting_card;
@@ -268,6 +267,9 @@ public class FreecellModel implements FreecellOperations {
   public void move(PileType source, int pileNumber,
                    int cardIndex, PileType destination, int destPileNumber)
           throws IllegalArgumentException, IllegalStateException {
+    if (this.isGameOver()) {
+      throw new IllegalStateException("Game is Over");
+    }
     Cards card_shifting = new Cards();
     List<LinkedList<Cards>> pile_source = new ArrayList<LinkedList<Cards>>();
 
