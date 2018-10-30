@@ -160,7 +160,7 @@ model.move(PileType.CASCADE,0,1,PileType.FOUNDATION,0);
 
     //System.out.println(model.getGameState());
 
-    model.move(PileType.CASCADE,0,13,PileType.OPEN,0);
+   /* model.move(PileType.CASCADE,0,13,PileType.OPEN,0);
     model.move(PileType.CASCADE,1,13,PileType.OPEN,1);
     model.move(PileType.CASCADE,2,13,PileType.OPEN,2);
     model.move(PileType.CASCADE,3,13,PileType.OPEN,3);
@@ -172,6 +172,8 @@ model.move(PileType.CASCADE,0,1,PileType.FOUNDATION,0);
     model.startGame(deck,true);
     System.out.println(model.getGameState());
     System.out.println("*************************");
+    */
+
     System.out.println(model.isGameOver());
   }
 }

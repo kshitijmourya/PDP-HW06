@@ -392,7 +392,16 @@ public class FreecellModel implements FreecellOperations {
 
     for (int i = 0; i < foundationPiles.getPiles().size(); i++) {
       if (this.foundationPiles.getPiles().get(i).size() == 13) {
-        value = true;
+        for(int j=0;j<openPiles.getPiles().size();j++){
+          if(this.openPiles.getPiles().get(i).size()==0)
+          {
+            for(int k=0;k<cascadePiles.getPiles().size();k++){
+              if(this.cascadePiles.getPiles().get(k).size()==0){
+                value = true;
+              }
+            }
+          }
+        }
       } else {
         value = false;
       }
