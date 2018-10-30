@@ -17,6 +17,9 @@ public class FreecellModel implements FreecellOperations {
   private Piles cascadePiles;
   private Piles foundationPiles;
   private boolean hasGameBegun = false;
+  private int count;
+  private int opens;
+  private int cascades;
 
   private final HashMap<String, Integer> value_table = new HashMap<String, Integer>() {
     {
@@ -44,8 +47,8 @@ public class FreecellModel implements FreecellOperations {
    */
   private FreecellModel(int opens, int cascades) {
     this.deck_of_cards = new Cards();
-    int opens1 = opens;
-    int cascades1 = cascades;
+    this.opens = opens;
+    this.cascades = cascades;
 
     this.openPiles = new Piles(opens, PileType.OPEN);
     this.cascadePiles = new Piles(cascades, PileType.CASCADE);
@@ -165,52 +168,58 @@ public class FreecellModel implements FreecellOperations {
       throw new IllegalArgumentException("Invalid Deck");
     }
 
-    List<Cards> copy_deck = new ArrayList<Cards>();
-    copy_deck.addAll(deck);
-
     /*
      *  what id startgame is called after another game has already been started.
      * we need to reset all values back to the original state after the builder was called....
      * whats the best way to do this?
-
-     if (hasGameBegun) {
-     hasGameBegun = false;
-     this.openPiles.getPiles().clear();
-     this.foundationPiles.getPiles().clear();
-     this.cascadePiles.getPiles().clear();
-     this.startGame(deck,shuffle);
-     }
      */
-    // if shuffle input is true the shuffle the deck.
-    if (shuffle) {
-      // Collections.shuffle() method randomly shuffle a Collections object.
-      Collections.shuffle(copy_deck);
+    if (count > 0) {
+      count--;
+
+      this.openPiles = new Piles(opens, PileType.OPEN);
+      this.cascadePiles = new Piles(4, PileType.FOUNDATION);
+      //this.foundationPiles.getPiles().clear();
+      //this.cascadePiles.getPiles().clear();
+      //System.out.println("Here");
+      this.startGame(deck, shuffle);
+
     }
 
-    // got the number of cascade piles from cascade piles. Could have used this.cascades instead
-    // for a simpler approach. However, using it through getPiles.getsize() we ensure that the
-    // correct pile number was made when the object was instantiated.
-    int number_of_piles = this.cascadePiles.getPiles().size();
+    if (count == 0) {
+      count = 1;
+      List<Cards> copy_deck = new ArrayList<Cards>();
+      copy_deck.addAll(deck);
 
-    // in the while-loop below, as cards in the deck are being used, they are being removed
-    // so the condition here is to keep looping until there are no more cards in the deck.
-    while (!copy_deck.isEmpty()) {
-      // for each pile in the cascade section, get the top card in the deck and add it to the pile.
-      for (int i = 0; i < number_of_piles; i++) {
-        // if the deck becomes empty as it is distributing cards then the process of distribution
-        // will stop and the loop will break.
-        if (!copy_deck.isEmpty()) {
-          // had to cast to get working, I don't know what K means in the interface but its
-          // keeping me from making the deck as List<Cards>. Ask in office hours.
-          this.cascadePiles.getPiles().get(i).addLast(copy_deck.get(0));
-          copy_deck.remove(0);
-        } else {
-          break;
-        }
+      // if shuffle input is true the shuffle the deck.
+      if (shuffle) {
+        // Collections.shuffle() method randomly shuffle a Collections object.
+        Collections.shuffle(copy_deck);
       }
-      hasGameBegun = true;
-    }
 
+      // got the number of cascade piles from cascade piles. Could have used this.cascades instead
+      // for a simpler approach. However, using it through getPiles.getsize() we ensure that the
+      // correct pile number was made when the object was instantiated.
+      int number_of_piles = this.cascadePiles.getPiles().size();
+
+      // in the while-loop below, as cards in the deck are being used, they are being removed
+      // so the condition here is to keep looping until there are no more cards in the deck.
+      while (!copy_deck.isEmpty()) {
+        // for each pile in the cascade section, get the top card in the deck and add it to the pile.
+        for (int i = 0; i < number_of_piles; i++) {
+          // if the deck becomes empty as it is distributing cards then the process of distribution
+          // will stop and the loop will break.
+          if (!copy_deck.isEmpty()) {
+            // had to cast to get working, I don't know what K means in the interface but its
+            // keeping me from making the deck as List<Cards>. Ask in office hours.
+            this.cascadePiles.getPiles().get(i).addLast(copy_deck.get(0));
+            copy_deck.remove(0);
+          } else {
+            break;
+          }
+        }
+        hasGameBegun = true;
+      }
+    }
   }
 
   /**
