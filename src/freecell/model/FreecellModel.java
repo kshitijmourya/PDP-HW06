@@ -163,7 +163,7 @@ public class FreecellModel implements FreecellOperations {
 
       this.openPiles = new Piles(opens, PileType.OPEN);
       this.foundationPiles = new Piles(4, PileType.FOUNDATION);
-      this.cascadePiles = new Piles(cascades,PileType.CASCADE);
+      this.cascadePiles = new Piles(cascades, PileType.CASCADE);
       //this.foundationPiles.getPiles().clear();
       //this.cascadePiles.getPiles().clear();
       //System.out.println("Here");
@@ -226,13 +226,14 @@ public class FreecellModel implements FreecellOperations {
       int shifting_card_value = value_table.get(pilesInput.get(pileNumber).peekLast().getValue());
       // check if value of first card matches cardIndex given by user.
       // If yes get card, else reject.
-      if (shifting_card_value == cardValue) {
-        shifting_card = pilesInput.get(pileNumber).peekLast();
-      }
-      else {
-        throw new IllegalArgumentException("Here is the exception");
-      }
+      //if (shifting_card_value == cardValue) {
+      shifting_card = pilesInput.get(pileNumber).peekLast();
+      //}
+      //else {
+      //throw new IllegalArgumentException("Here is the exception  " + shifting_card_value);
+      //}
     }
+
     return shifting_card;
   }
 
@@ -274,6 +275,8 @@ public class FreecellModel implements FreecellOperations {
     if (this.isGameOver()) {
       throw new IllegalStateException("Game is Over");
     }
+
+
     Cards card_shifting = new Cards();
     List<LinkedList<Cards>> pile_source = new ArrayList<LinkedList<Cards>>();
 
@@ -333,9 +336,8 @@ public class FreecellModel implements FreecellOperations {
                       .getColor())) {
         removeCard(source, pileNumber);
         this.foundationPiles.getPiles().get(destPileNumber).addLast(card_shifting);
-      }
-      else {
-        throw  new IllegalArgumentException("Invalid Move");
+      } else {
+        throw new IllegalArgumentException("Invalid Move");
       }
     }
 

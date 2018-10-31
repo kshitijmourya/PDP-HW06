@@ -22,7 +22,7 @@ public class TestMain {
   private static <T> void helper(freecell.model.FreecellOperations<T> model) {
     List<T> deck = model.getDeck();
     model.startGame(deck, false);
-    System.out.print(model.getGameState());
+    //System.out.print(model.getGameState());
     //System.out.println();
     //System.out.println("**********************************************************");
 
@@ -175,8 +175,15 @@ model.move(PileType.CASCADE,0,1,PileType.FOUNDATION,0);
     System.out.println("*************************");
     */
 
-    model.move(PileType.CASCADE, 0, 13, PileType.OPEN, 0);
+    //model.move(PileType.CASCADE, 0, 13, PileType.OPEN, 0);
+    //model.move(PileType.CASCADE,1,13,PileType.OPEN,1);
+    //model.move(PileType.CASCADE,2,13,PileType.OPEN,2);
+    //model.move(PileType.CASCADE,3,13,PileType.OPEN,3);
 
+    //model.startGame(deck,true);
+
+
+    model.move(PileType.CASCADE,5,13,PileType.FOUNDATION,0);
 
     //System.out.println(model.getGameState());
     //model.move(PileType.CASCADE,2,13,PileType.FOUNDATION,0);
