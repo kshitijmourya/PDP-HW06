@@ -170,6 +170,13 @@ public class FreecellModelTest {
     assertEquals(testModel.getGameState(), "");
   }
 
+  @Test(expected = IllegalStateException.class)
+  public void testMovebeforeGameStart() {
+    testModel.getDeck();
+    testModel.move(PileType.CASCADE, 0, 0, PileType.CASCADE, 3);
+    fail();
+  }
+
   @Test
   public void testGameStateAfterStartNoShuffle() {
     testModel.startGame(testModel.getDeck(), false);
@@ -187,14 +194,30 @@ public class FreecellModelTest {
     testModel3.startGame(testModel3.getDeck(), false);
     //Valid moves
     //cascade to open
+
     testModel3.move(PileType.CASCADE, 0, 0, PileType.OPEN, 0);
     //cascade to foundation
     testModel3.move(PileType.CASCADE, 1, 0, PileType.FOUNDATION, 1);
     //cascade to cascade
     testModel3.move(PileType.CASCADE, 2, 0, PileType.CASCADE, 5);
 
-    //invalid move
+    //Invalid moves
+
+    //cascade to open--pile is not empty
     testModel3.move(PileType.CASCADE, 6, 0, PileType.OPEN, 0);
+    fail();
+    //cascade to foundation-- invalid move works both on empty and with card
+    testModel3.move(PileType.CASCADE, 6, 0, PileType.FOUNDATION, 1);
+    fail();
+    //cascade to cascade
+    testModel3.move(PileType.CASCADE, 0, 0, PileType.CASCADE, 4);
+    fail();
+
+
+    //Foundation to open
+    testModel3.move(PileType.FOUNDATION, 1, 0, PileType.OPEN, 2);
+    //Foundation to cascade
+    testModel3.move(PileType.FOUNDATION, 1, 0, PileType.CASCADE, 0);
     fail();
   }
 
