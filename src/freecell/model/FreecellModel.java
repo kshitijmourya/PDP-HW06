@@ -295,10 +295,10 @@ public class FreecellModel implements FreecellOperations {
 
     int shifting_card_value = value_table.get(card_shifting.getValue());
 
-    // if detination is open pile, make sure it is empty.
+    // if destination is open pile, make sure it is empty.
     if (destination.equals(PileType.OPEN)) {
       if (!this.openPiles.getPiles().get(destPileNumber).isEmpty()) {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("Pile is not empty");
       } else {
         this.openPiles
                 .getPiles()
@@ -333,6 +333,9 @@ public class FreecellModel implements FreecellOperations {
                       .getColor())) {
         removeCard(source, pileNumber);
         this.foundationPiles.getPiles().get(destPileNumber).addLast(card_shifting);
+      }
+      else {
+        throw  new IllegalArgumentException("Invalid Move");
       }
     }
 

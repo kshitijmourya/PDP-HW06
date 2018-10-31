@@ -175,13 +175,11 @@ model.move(PileType.CASCADE,0,1,PileType.FOUNDATION,0);
     System.out.println("*************************");
     */
 
-    model.move(PileType.CASCADE,0,13,PileType.OPEN,0);
+    model.move(PileType.CASCADE, 0, 13, PileType.OPEN, 0);
+
+
     //System.out.println(model.getGameState());
     //model.move(PileType.CASCADE,2,13,PileType.FOUNDATION,0);
-    System.out.println(model.getGameState());
-
-    model.startGame(deck,false);
-
     System.out.println(model.getGameState());
 
 
