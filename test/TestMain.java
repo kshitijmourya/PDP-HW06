@@ -21,7 +21,6 @@ public class TestMain {
 
   private static <T> void helper(freecell.model.FreecellOperations<T> model) {
     List<T> deck = model.getDeck();
-    System.out.println(deck);
     model.startGame(deck, false);
     //System.out.print(model.getGameState());
     //System.out.println();

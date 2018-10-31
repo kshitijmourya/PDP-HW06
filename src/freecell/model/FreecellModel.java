@@ -279,8 +279,9 @@ public class FreecellModel implements FreecellOperations {
           throws IllegalArgumentException, IllegalStateException {
     if (this.isGameOver()) {
       throw new IllegalStateException("Game is Over");
-    } else if (source == destination && pileNumber == destPileNumber) {
-
+    }
+    if (!hasGameBegun) {
+      throw new IllegalStateException("Game has not begun");
     } else {
       Cards card_shifting = new Cards();
       List<LinkedList<Cards>> pile_source = new ArrayList<LinkedList<Cards>>();
@@ -334,7 +335,8 @@ public class FreecellModel implements FreecellOperations {
           removeCard(source, pileNumber);
         }
         // if pile is not empty, card value is 1 level higher than current card in pile,
-        // and card to be added has the suite matching that of the cards in the pile the add the card.
+        // and card to be added has the suite matching that of the cards in the pile
+        // the add the card.
         else if (!this.foundationPiles.getPiles().get(destPileNumber).isEmpty()
                 && shifting_card_value -
                 value_table

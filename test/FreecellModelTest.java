@@ -214,7 +214,6 @@ public class FreecellModelTest {
     testModel3.startGame(testModel3.getDeck(), false);
 
 
-
     testModel3.move(PileType.CASCADE, 0, 1, PileType.FOUNDATION, 0);
     testModel3.move(PileType.CASCADE, 1, 1, PileType.FOUNDATION, 1);
     testModel3.move(PileType.CASCADE, 2, 1, PileType.FOUNDATION, 2);
@@ -273,11 +272,6 @@ public class FreecellModelTest {
 
     assertEquals(testModel3.isGameOver(), true);
 
-    // System.out.println(testModel3.isGameOver());
-    //System.out.println(testModel3.getGameState());
-   // testModel3.startGame(testModel3.getDeck(), false);
-    // System.out.println(testModel3.getGameState());
-    // System.out.println(testModel3.isGameOver());
   }
 
 
