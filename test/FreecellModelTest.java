@@ -10,6 +10,7 @@ import freecell.model.PileType;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.fail;
 
 
 public class FreecellModelTest {
@@ -194,7 +195,7 @@ public class FreecellModelTest {
 
     //invalid move
     testModel3.move(PileType.CASCADE, 6, 0, PileType.OPEN, 0);
-
+    fail();
   }
 
 

@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * CardPile interface.
+ * CardPile interface. There are 3 types of Piles in Freecell.
  */
 public interface CardPiles {
 

@@ -5,7 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Cards class which gives methods for cards.
+ * Cards class which gives methods for cards. It implements CardDeck interface and overides its
+ * methods.
  */
 public class Cards implements CardDeck {
   private String suite;
