@@ -21,6 +21,7 @@ public class TestMain {
 
   private static <T> void helper(freecell.model.FreecellOperations<T> model) {
     List<T> deck = model.getDeck();
+    System.out.println(deck);
     model.startGame(deck, false);
     //System.out.print(model.getGameState());
     //System.out.println();
@@ -110,12 +111,34 @@ public class TestMain {
     //model.startGame(deck,true);
 
 
-    //model.move(PileType.CASCADE,5,13,PileType.FOUNDATION,0);
+    //Valid moves
+    //cascade to open
+    //model.move(PileType.CASCADE,0,0,PileType.OPEN,0);
+    //cascade to foundation
+    //model.move(PileType.CASCADE,1,0,PileType.FOUNDATION,1);
+    //cascade to cascade
+    //model.move(PileType.CASCADE,2,0,PileType.CASCADE,5);
 
-    //System.out.println(model.getGameState());
-    //model.move(PileType.CASCADE,2,13,PileType.FOUNDATION,0);
-    //System.out.println(model.getGameState());
+    //Invalid moves
 
+    //cascade to open--pile is not empty
+   // model.move(PileType.CASCADE,6,0,PileType.OPEN,0);
+    //cascade to foundation-- invalid move works both on empty and with card
+    //model.move(PileType.CASCADE,6,0,PileType.FOUNDATION,1);
+    //cascade to cascade
+   // model.move(PileType.CASCADE,0,0,PileType.CASCADE,4);
+
+
+    //Foundation to open
+    //model.move(PileType.FOUNDATION,1,0,PileType.OPEN,2);
+    //Foundation to cascade
+    //model.move(PileType.FOUNDATION,1,0,PileType.CASCADE,0);
+
+
+    //Open to Open
+
+    //model.move(PileType.CASCADE,0,0,PileType.CASCADE,0);
+    System.out.println(model.getGameState());
 
     System.out.println(model.isGameOver());
   }

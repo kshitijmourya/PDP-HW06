@@ -181,6 +181,22 @@ public class FreecellModelTest {
     assertNotEquals(testModel.getGameState(), initialGameState);
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testMove() {
+    testModel3.startGame(testModel3.getDeck(), false);
+    //Valid moves
+    //cascade to open
+    testModel3.move(PileType.CASCADE, 0, 0, PileType.OPEN, 0);
+    //cascade to foundation
+    testModel3.move(PileType.CASCADE, 1, 0, PileType.FOUNDATION, 1);
+    //cascade to cascade
+    testModel3.move(PileType.CASCADE, 2, 0, PileType.CASCADE, 5);
+
+    //invalid move
+    testModel3.move(PileType.CASCADE, 6, 0, PileType.OPEN, 0);
+
+  }
+
 
   @Test
   public void testisGameOverNo() {
@@ -194,8 +210,9 @@ public class FreecellModelTest {
 
     //System.out.println(testModel3.getDeck().toString());
     //System.out.println(testModel3.isGameOver());
-
+    //System.out.println(testModel3.getGameState());
     testModel3.startGame(testModel3.getDeck(), false);
+
 
 
     testModel3.move(PileType.CASCADE, 0, 1, PileType.FOUNDATION, 0);
@@ -253,10 +270,12 @@ public class FreecellModelTest {
     testModel3.move(PileType.CASCADE, 50, 13, PileType.FOUNDATION, 2);
     testModel3.move(PileType.CASCADE, 51, 13, PileType.FOUNDATION, 3);
 
+
     assertEquals(testModel3.isGameOver(), true);
+
     // System.out.println(testModel3.isGameOver());
     //System.out.println(testModel3.getGameState());
-    testModel3.startGame(testModel3.getDeck(), false);
+   // testModel3.startGame(testModel3.getDeck(), false);
     // System.out.println(testModel3.getGameState());
     // System.out.println(testModel3.isGameOver());
   }
