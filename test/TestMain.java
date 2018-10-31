@@ -12,20 +12,17 @@ public class TestMain {
   public static void main(String[] args) {
     helper(FreecellModel
             .getBuilder()
-            .cascades(8)
+            .cascades(6)
             .opens(4)
             .build());
 
-    helper(FreecellModel
-            .getBuilder()
-            .cascades(8)
-            .opens(1).build());
+
   }
 
   private static <T> void helper(freecell.model.FreecellOperations<T> model) {
     List<T> deck = model.getDeck();
     model.startGame(deck, false);
-    //System.out.print(model.getGameState());
+    System.out.print(model.getGameState());
     //System.out.println();
     //System.out.println("**********************************************************");
 
@@ -177,6 +174,16 @@ model.move(PileType.CASCADE,0,1,PileType.FOUNDATION,0);
     System.out.println(model.getGameState());
     System.out.println("*************************");
     */
+
+    model.move(PileType.CASCADE,0,13,PileType.OPEN,0);
+    //System.out.println(model.getGameState());
+    //model.move(PileType.CASCADE,2,13,PileType.FOUNDATION,0);
+    System.out.println(model.getGameState());
+
+    model.startGame(deck,false);
+
+    System.out.println(model.getGameState());
+
 
     System.out.println(model.isGameOver());
   }

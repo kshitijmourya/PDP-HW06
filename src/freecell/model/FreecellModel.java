@@ -19,6 +19,7 @@ public class FreecellModel implements FreecellOperations {
   private boolean hasGameBegun = false;
   private int count;
   private int opens;
+  private int cascades;
 
   private final HashMap<String, Integer> value_table = new HashMap<String, Integer>() {
     {
@@ -52,6 +53,7 @@ public class FreecellModel implements FreecellOperations {
   private FreecellModel(int cascades, int opens) throws IllegalArgumentException {
     this.deck_of_cards = new Cards();
     this.opens = opens;
+    this.cascades = cascades;
 
     if (opens < 1 || cascades < 4) {
       throw new IllegalArgumentException("Minimum Open piles should be 1 and " +
@@ -160,7 +162,8 @@ public class FreecellModel implements FreecellOperations {
       count--;
 
       this.openPiles = new Piles(opens, PileType.OPEN);
-      this.cascadePiles = new Piles(4, PileType.FOUNDATION);
+      this.foundationPiles = new Piles(4, PileType.FOUNDATION);
+      this.cascadePiles = new Piles(cascades,PileType.CASCADE);
       //this.foundationPiles.getPiles().clear();
       //this.cascadePiles.getPiles().clear();
       //System.out.println("Here");
@@ -225,7 +228,8 @@ public class FreecellModel implements FreecellOperations {
       // If yes get card, else reject.
       if (shifting_card_value == cardValue) {
         shifting_card = pilesInput.get(pileNumber).peekLast();
-      } else {
+      }
+      else {
         throw new IllegalArgumentException("Here is the exception");
       }
     }
