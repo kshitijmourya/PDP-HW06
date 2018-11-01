@@ -17,22 +17,22 @@ public class FreecellModelTest {
   private FreecellOperations testModel;
   private FreecellOperations testModel2;
   private FreecellOperations testModel3;
-  private String initialGameState = "F1:\n" +
-          "F2:\n" +
-          "F3:\n" +
-          "F4:\n" +
-          "O1:\n" +
-          "O2:\n" +
-          "O3:\n" +
-          "O4:\n" +
-          "C1: A♥, 3♥, 5♥, 7♥, 9♥, J♥, K♥\n" +
-          "C2: A♦, 3♦, 5♦, 7♦, 9♦, J♦, K♦\n" +
-          "C3: A♠, 3♠, 5♠, 7♠, 9♠, J♠, K♠\n" +
-          "C4: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n" +
-          "C5: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n" +
-          "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n" +
-          "C7: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n" +
-          "C8: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣";
+  private String initialGameState = "F1:\n"
+          + "F2:\n"
+          + "F3:\n"
+          + "F4:\n"
+          + "O1:\n"
+          + "O2:\n"
+          + "O3:\n"
+          + "O4:\n"
+          + "C1: A♥, 3♥, 5♥, 7♥, 9♥, J♥, K♥\n"
+          + "C2: A♦, 3♦, 5♦, 7♦, 9♦, J♦, K♦\n"
+          + "C3: A♠, 3♠, 5♠, 7♠, 9♠, J♠, K♠\n"
+          + "C4: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n"
+          + "C5: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
+          + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
+          + "C7: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n"
+          + "C8: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣";
 
 
   /**
@@ -67,10 +67,8 @@ public class FreecellModelTest {
     Cards extra_card = cards.get(1);
     cards.add(extra_card);
     cards.remove(4);
-    //System.out.println(cards);
     assertEquals("", testModel2.getGameState());
     testModel.startGame(cards, false);
-    //System.out.println(testModel2.getGameState());
   }
 
   /**
@@ -97,22 +95,22 @@ public class FreecellModelTest {
     testModel.startGame(deck, false);
     String st = testModel.getGameState();
 
-    assertEquals(st, "F1:\n" +
-            "F2:\n" +
-            "F3:\n" +
-            "F4:\n" +
-            "O1:\n" +
-            "O2:\n" +
-            "O3:\n" +
-            "O4:\n" +
-            "C1: A♥, 3♥, 5♥, 7♥, 9♥, J♥, K♥\n" +
-            "C2: A♦, 3♦, 5♦, 7♦, 9♦, J♦, K♦\n" +
-            "C3: A♠, 3♠, 5♠, 7♠, 9♠, J♠, K♠\n" +
-            "C4: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n" +
-            "C5: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n" +
-            "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n" +
-            "C7: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n" +
-            "C8: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣");
+    assertEquals(st, "F1:\n"
+            + "F2:\n"
+            + "F3:\n"
+            + "F4:\n"
+            + "O1:\n"
+            + "O2:\n"
+            + "O3:\n"
+            + "O4:\n"
+            + "C1: A♥, 3♥, 5♥, 7♥, 9♥, J♥, K♥\n"
+            + "C2: A♦, 3♦, 5♦, 7♦, 9♦, J♦, K♦\n"
+            + "C3: A♠, 3♠, 5♠, 7♠, 9♠, J♠, K♠\n"
+            + "C4: A♣, 3♣, 5♣, 7♣, 9♣, J♣, K♣\n"
+            + "C5: 2♥, 4♥, 6♥, 8♥, 10♥, Q♥\n"
+            + "C6: 2♦, 4♦, 6♦, 8♦, 10♦, Q♦\n"
+            + "C7: 2♠, 4♠, 6♠, 8♠, 10♠, Q♠\n"
+            + "C8: 2♣, 4♣, 6♣, 8♣, 10♣, Q♣");
 
   }
 
@@ -189,38 +187,48 @@ public class FreecellModelTest {
     assertNotEquals(testModel.getGameState(), initialGameState);
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testMove() {
+  @Test (expected = IllegalArgumentException.class)
+  public void testIllegaMoves1() {
     testModel3.startGame(testModel3.getDeck(), false);
-    //Valid moves
-    //cascade to open
-
-    testModel3.move(PileType.CASCADE, 0, 0, PileType.OPEN, 0);
-    //cascade to foundation
-    testModel3.move(PileType.CASCADE, 1, 0, PileType.FOUNDATION, 1);
-    //cascade to cascade
-    testModel3.move(PileType.CASCADE, 2, 0, PileType.CASCADE, 5);
-
     //Invalid moves
-
+    testModel3.move(PileType.CASCADE, 0, 0, PileType.OPEN, 0);
+    System.out.println(testModel3.getGameState());
     //cascade to open--pile is not empty
     testModel3.move(PileType.CASCADE, 6, 0, PileType.OPEN, 0);
-    fail();
-    //cascade to foundation-- invalid move works both on empty and with card
-    testModel3.move(PileType.CASCADE, 6, 0, PileType.FOUNDATION, 1);
-    fail();
-    //cascade to cascade
-    testModel3.move(PileType.CASCADE, 0, 0, PileType.CASCADE, 4);
-    fail();
-
-
-    //Foundation to open
-    testModel3.move(PileType.FOUNDATION, 1, 0, PileType.OPEN, 2);
-    //Foundation to cascade
-    testModel3.move(PileType.FOUNDATION, 1, 0, PileType.CASCADE, 0);
-    fail();
+    System.out.println(testModel3.getGameState());
+    //fail();
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testIllegalMoves2() {
+    testModel3.startGame(testModel3.getDeck(), false);
+    //cascade to foundation-- invalid move works both on empty and with card
+    testModel3.move(PileType.CASCADE, 6, 0, PileType.FOUNDATION, 1);
+    //fail();
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testIllegalMoves3() {
+    testModel3.startGame(testModel3.getDeck(), false);
+    //cascade to cascade
+    testModel3.move(PileType.CASCADE, 0, 0, PileType.CASCADE, 4);
+    //fail();
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testIllegalMoves4() {
+    testModel3.startGame(testModel3.getDeck(), false);
+    //Foundation to open
+    testModel3.move(PileType.FOUNDATION, 1, 0, PileType.OPEN, 2);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testIllegalMoves5() {
+    testModel3.startGame(testModel3.getDeck(), false);
+    //Foundation to cascade
+    testModel3.move(PileType.FOUNDATION, 1, 0, PileType.CASCADE, 0);
+    //fail();
+  }
 
   @Test
   public void testisGameOverNo() {
@@ -231,10 +239,6 @@ public class FreecellModelTest {
 
   @Test
   public void testisGameOverYes() {
-
-    //System.out.println(testModel3.getDeck().toString());
-    //System.out.println(testModel3.isGameOver());
-    //System.out.println(testModel3.getGameState());
     testModel3.startGame(testModel3.getDeck(), false);
 
 
@@ -292,7 +296,6 @@ public class FreecellModelTest {
     testModel3.move(PileType.CASCADE, 49, 13, PileType.FOUNDATION, 1);
     testModel3.move(PileType.CASCADE, 50, 13, PileType.FOUNDATION, 2);
     testModel3.move(PileType.CASCADE, 51, 13, PileType.FOUNDATION, 3);
-
 
     assertEquals(testModel3.isGameOver(), true);
 

@@ -135,7 +135,6 @@ public class FreecellModel implements FreecellOperations {
   public void startGame(List deck, boolean shuffle) throws IllegalArgumentException {
 
     if (deck.size() == 52) {
-      //System.out.println("here1");
       CardDeck new_deck = new Cards();
       Cards[] control_deck = new Cards[52];
       List<Cards> test_deck = new_deck.createDeck();
@@ -171,7 +170,6 @@ public class FreecellModel implements FreecellOperations {
       this.cascadePiles = new Piles(cascades, PileType.CASCADE);
       //this.foundationPiles.getPiles().clear();
       //this.cascadePiles.getPiles().clear();
-      //System.out.println("Here");
       this.startGame(deck, shuffle);
 
     }
